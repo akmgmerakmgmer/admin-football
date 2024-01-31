@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+.bg-gradient{
+  @apply bg-gradient-to-bl from-blue-800 via-blue-700 to-blue-600
+}
+.en-font{
+  font-family: 'Inter', sans-serif;
+}
+.ar-font{
+  font-family: 'Noto Kufi Arabic', sans-serif;
+}
+
+.alert-enter {
+  opacity: 0;
+}
+
+.alert-enter-active {
+  opacity: 1;
+  transition: 300ms;
+}
+
+.alert-exit {
+  opacity: 1;
+}
+
+.alert-exit-active {
+  opacity: 0;
+  transition: 300ms;
+  transform: scale(0);
+}
+
+.default-enter {
+  opacity: 0;
+}
+
+.default-enter-active {
+  opacity: 1;
+  transition: 300ms;
+}
+
+.default-exit {
+  opacity: 1;
+}
+
+.default-exit-active {
+  opacity: 0;
+}
+
+.slider-enter {
+  opacity: 0;
+}
+
+.slider-enter-active {
+  opacity: 1;
+  transition: 300ms;
+}
+
+.slider-exit {
+  opacity: 1;
+}
+
+.slider-exit-active {
+  opacity: 0;
+  transition: 300ms;
+  height: 0;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.carousel_slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: black;
+  display: flex;
+  align-items: center;
+}
+.carousel_slide img {
+  max-width: 100%;
+}
+.carousel_history {
+  position: absolute;
+  z-index: 2;
+  bottom: 15px;
+  width: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.carousel_history ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  gap: 20px;
+  height: 3px;
+}
+.carousel_history ul li {
+  width: 15%;
+  box-sizing: border-box;
+  height: inherit;
+  position: relative;
+}
+.carousel_history ul li button {
+  border: none;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: background-color 300ms ease;
+}
+.carousel_history ul li button.active {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.carousel_control {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 0;
+  padding: 0 5px;
+  width: 10%;
+  overflow: hidden;
+  transition: background-color 300ms ease;
+  cursor: pointer;
+}
+.carousel_control span {
+  display: inline-block;
+  width: 2vw;
+  height: 2vw;
+  position: relative;
+  box-sizing: border-box;
+  opacity: 0.65;
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
+  transition: opacity 300ms ease;
+}
+.carousel_control:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.carousel_control:hover span {
+  opacity: 0.95;
+}
+.carousel_control__prev {
+  left: 0;
+  padding-left: 12px;
+}
+.carousel_control__prev span {
+  transform: rotate(45deg);
+}
+.carousel_control__next {
+  right: 0;
+  padding-right: 12px;
+}
+.carousel_control__next span {
+  transform: rotate(-135deg);
+}
+.leave {
+  transform: translateX(0);
+}
+.enter-active.enter-next, .enter-active.enter-prev {
+  transform: translateX(0);
+  transition: transform 500ms linear;
+}
+.enter-next {
+  transform: translateX(100%);
+}
+.enter-prev {
+  transform: translateX(-100%);
+  transition: transform 500ms linear;
+}
+.leave-active-next {
+  transform: translateX(-100%);
+  transition: transform 500ms linear;
+}
+.leave.leave-active-prev {
+  transform: translateX(100%);
+  transition: transform 500ms linear;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E42B6;
+  border-radius: 6px;
+}
