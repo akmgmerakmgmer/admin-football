@@ -78,11 +78,11 @@ export default function Sidebar(props: SidebarProps) {
             action: token ? Logout : () => navigate('/login'),
             icon: token ? <LogoutIcon /> : <LoginIcon />
         },
-        {
-            name: 'contactUs',
-            route: '/contact-us',
-            icon: <ContactMailIcon />
-        },
+        // {
+        //     name: 'contactUs',
+        //     route: '/contact-us',
+        //     icon: <ContactMailIcon />
+        // },
         {
             name: 'English',
             action: () => i18n.changeLanguage('en'),
