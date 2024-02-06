@@ -33,7 +33,7 @@ export default function MainQuestions() {
         })
     }
 
-    const deletePlayer = (id: string) => {
+    const deleteQuestion = (id: string) => {
         setLoading(true)
         axiosInstance.delete(`/questions/${id}`).then(response => {
             getQuestions()
@@ -74,7 +74,7 @@ export default function MainQuestions() {
                 : <div className='overflow-y-hidden overflow-x-scroll'>
                     <Table checkBoxItems={checkBoxItems} checkAll={checkAllItems} deleteUrl='questions' reloadItems={getQuestions} title={t("questions")} tableHeads={tableHeads} loading={loading}>
                         {questions.map((question: any, index: any) => (
-                            <SingleQuestion enableFunc={enableFunc} checkBoxItems={checkBoxItems} value={question} deleteFunc={deletePlayer} key={index} />
+                            <SingleQuestion enableFunc={enableFunc} checkBoxItems={checkBoxItems} value={question} deleteFunc={deleteQuestion} key={index} />
                         ))}
                     </Table>
                 </div>}

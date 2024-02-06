@@ -11,6 +11,8 @@ import SidebarAction from './SidebarAction';
 import { useNavigate } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 import { fetchUserDone } from '../../redux/user';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import QuizIcon from '@mui/icons-material/Quiz';
 
 type SidebarProps = {
     closeDrawer: () => void,
@@ -37,23 +39,23 @@ export default function Sidebar(props: SidebarProps) {
         {
             name: 'players',
             route: '/players',
-            icon: <PersonIcon />
+            icon: <DirectionsRunIcon />
         },
         {
             name: 'questions',
             route: '/questions',
-            icon: <PersonIcon />
+            icon: <QuizIcon />
         },
         {
             name: 'profile',
             route: `/edit-admin-user/${user._id}`,
             icon: <PersonOutlineOutlinedIcon />
         },
-        {
-            name: 'contactUs',
-            route: '/contact-us',
-            icon: <ContactMailIcon />
-        },
+        // {
+        //     name: 'contactUs',
+        //     route: '/contact-us',
+        //     icon: <ContactMailIcon />
+        // },
         {
             name: token ? 'logout' : 'login',
             action: token ? Logout : () => navigate('/login'),

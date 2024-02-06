@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react'
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +20,7 @@ type SelectedComponentByIdProps = {
 
 export default function SelectedComponentById(props: SelectedComponentByIdProps) {
     const { i18n, t } = useTranslation()
+    useEffect(() => { }, [props.items])
     return (
         <FormControl fullWidth>
             {/* <label className="font-semibold text-gray-800 mb-1 block text-xs">{props.label}</label> */}
@@ -37,9 +38,9 @@ export default function SelectedComponentById(props: SelectedComponentByIdProps)
                 ref={props.ref}
                 required={props.required}
             >
-                {props.items.map((item: any) => {
+                {props.items.map((item: any, index: any) => {
                     return (
-                        <MenuItem value={props.fullItem ? item : item._id} key={item._id}><span className="capitalize text-sm">{i18n.language === "en" ? item.name : item.nameAr}</span> </MenuItem>
+                        <MenuItem value={item.value.trim()} key={index}><span className="capitalize text-sm">{i18n.language === "en" ? item.en : item.ar}</span> </MenuItem>
                     )
                 })}
             </Select>

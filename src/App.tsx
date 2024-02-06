@@ -17,6 +17,7 @@ const Players = lazy(() => import('./pages/Players/Players'));
 const EditPlayer = lazy(() => import('./pages/Players/EditPlayer'));
 const Questions = lazy(() => import('./pages/Questions/Questions'));
 const AddQuestion = lazy(() => import('./pages/Questions/AddQuestion'));
+const EditQuestion = lazy(() => import('./pages/Questions/EditQuestion'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 const Home = lazy(() => import('./pages/Home'));
 const AddUser = lazy(() => import('./pages/Users/AddUser'));
@@ -98,7 +99,7 @@ function App() {
                           <Route path='/edit-player/:id' element={<EditPlayer />} />
                           <Route path='/questions' element={<Questions />} />
                           <Route path='/add-question' element={<AddQuestion />} />
-                          <Route path='/edit-question' element={<Questions />} />
+                          <Route path='/edit-question/:id' element={<EditQuestion />} />
                           <Route path='/login' element={<Login />} />
                           {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}
                           {/* <Route path='/reset-password/:token' element={<ResetPassword />} /> */}

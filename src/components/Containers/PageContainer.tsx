@@ -15,9 +15,10 @@ export default function PageContainer(props: PageContainersProps) {
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (location.pathname === '/') navigate('/questions')
     const token = localStorage.getItem('token')
     if (!token) return navigate('/login')
-    if (user && (user.roles.indexOf('developer') === -1 && user.roles.indexOf('admin') === -1 && user.roles.indexOf('superAdmin') === -1)) return navigate('/login')
+    if (user && user.roles.length && (user.roles.indexOf('developer') === -1 && user.roles.indexOf('admin') === -1 && user.roles.indexOf('superAdmin') === -1)) return navigate('/login')
   }, [])
 
   return (

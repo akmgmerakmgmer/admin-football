@@ -75,6 +75,7 @@ export default function TopBar() {
             >
                 <FullScreenLoading />
             </CSSTransition>
+            <h1 className='font-bold whitespace-nowrap tracking-wider'>Arena Games</h1>
             <div className='lg:flex hidden items-center gap-2.5 w-full justify-end'>
                 <Select buttonName={i18n.language === 'en' ? 'English' : 'عربي'} menuItems={langs} />
                 {!user.username ? <Link to={'/login'}><LoginIcon /></Link> : <Select buttonName={<Avatar />} menuItems={!user.username ? accountProfileLogin : accountProfileLogout} divide={true} />}

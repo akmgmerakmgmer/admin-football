@@ -35,7 +35,7 @@ export default function SingleQuestion(props: SingleQuestionProps) {
                     <div className="font-medium text-gray-900">{t(props.value.questionMode)}</div>
                 </div>
             </td>
-            <EditAndDelete route={`/edit-player/${props.value._id}`} deleteFunc={() => props.deleteFunc(props.value._id)} />
+            <EditAndDelete route={`/edit-question/${props.value._id}`} deleteFunc={() => props.deleteFunc(props.value._id)} />
         </tr>
 
     )
