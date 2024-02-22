@@ -16,8 +16,14 @@ export default function useQuestions(props: any) {
         errorData,
         hintsRef,
         setHints,
-        hints
+        hints,
+        setImageError,
+        setPlayersNumberError
     } = props
+    const addHint = () => {
+        const newHintsValue = [...hints, { en: '', ar: '' }]
+        setHints(newHintsValue)
+    }
     return {
         getQuestionDetails: () => {
             if (id) {
@@ -33,6 +39,10 @@ export default function useQuestions(props: any) {
                 setPageLoading(false)
             }
         },
+        changeQuestionMode: (value: string) => {
+            if ((value === 'passwordChallenge' || value === 'guessThePlayer') && !hints.length) addHint()
+            setQuestionForm({ ...questionForm, questionMode: value, answer: '' })
+        },
         addQuestion: () => {
             if (questionForm.questionMode === 'multipleChoices') {
                 for (let i in choicesRef.current) {
@@ -44,6 +54,8 @@ export default function useQuestions(props: any) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }
             }
+            if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
+            if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)
             axiosInstance.post('questions', { ...questionForm, choices: choicesRef.current, hints: hintsRef.current }).then(response => {
                 navigate('/questions')
@@ -59,20 +71,48 @@ export default function useQuestions(props: any) {
             }
         },
         editQuestion: () => {
-            console.log(hintsRef, 'dsadsadasd')
-
+            if (questionForm.questionMode === 'multipleChoices') {
+                for (let i in choicesRef.current) {
+                    if (choicesRef.current[i].en.trim() === '' || choicesRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_choices' })
+                }
+            }
+            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') {
+                for (let i in hintsRef.current) {
+                    if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
+                }
+            }
+            if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
+            if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)
             axiosInstance.put(`questions/${id}`, { ...questionForm, choices: choicesRef.current, hints: hintsRef.current }).then(response => {
                 navigate('/questions')
             }).finally(() => setLoading(false))
         },
-        addHint: () => {
-            const newHintsValue = [...hints, { en: '', ar: '' }]
-            setHints(newHintsValue)
-        },
+        addHint: addHint,
         showQuestion: () => {
             if (questionForm.questionMode === 'multipleChoices' || questionForm.questionMode === 'trueOrFalse') return true
             return false
+        },
+        showHints: () => {
+            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') return true
+            return false
+        },
+        showPlayerSearch: () => {
+            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer' || (questionForm.questionMode === 'guessTheTeam' && questionForm.teamPlayers.length < 11)) return true
+            return false
+        },
+        choosePlayerMethod: (value: any) => {
+            if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.indexOf(value.nameEn) === -1) {
+                setQuestionForm({ ...questionForm, answer: [...questionForm.answer, value.nameEn], teamPlayers: [...questionForm.teamPlayers, value] })
+                return
+            }
+            setQuestionForm({ ...questionForm, answer: value })
+        },
+        deletePlayer: (index: any) => {
+            questionForm.teamPlayers.splice(index, 1)
+            questionForm.answer.splice(index, 1)
+            setQuestionForm({ ...questionForm, teamPlayers: [...questionForm.teamPlayers], answer: [...questionForm.answer] })
+
         }
     }
 }

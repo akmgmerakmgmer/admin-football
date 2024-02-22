@@ -12,23 +12,27 @@ import MultipleChoices from './MultipleChoices'
 import useQuestions from '../../../customHooks/useQuestions'
 import PasswordChallenge from './PasswordChallenge'
 import AnswerPlayerSearch from './AnswerPlayerSearch'
+import UploadImage from '../../GeneralComponents/UploadImage'
+import SinglePlayer from './SinglePlayer'
 
 export default function Add() {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { id } = useParams()
-    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge', 'guessThePlayer']
+    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge', 'guessThePlayer', 'guessTheTeam']
     const modes = ['worldCup', 'championsLeague', 'europaLeague', 'premierLeague', 'laliga', 'seriaA', 'bundesliga', 'ligue1', 'africaCup', 'clubWorldCup', 'euros', 'general']
     const trueOrFalseAnswers = ['true', 'false']
     const difficulties = ['easy', 'medium', 'hard']
     const [choices, setChoices] = useState<any>([{ en: '', ar: '', value: '' }, { en: '', ar: '', value: '' }, { en: '', ar: '', value: '' }, { en: '', ar: '', value: '' }])
     const [hints, setHints] = useState<any>([])
+    const [imageError, setImageError] = useState('')
     const [questionForm, setQuestionForm] = useState<any>({
         question: {
             en: "",
             ar: ""
         },
         choices: [],
+        teamPlayers: [],
         answer: "",
         questionMode: "",
         difficulty: "",
@@ -38,11 +42,14 @@ export default function Add() {
     const [loading, setLoading] = useState(false)
     const [pageLoading, setPageLoading] = useState(true)
     const [rerender, setRerender] = useState(false)
+    const [playersNumberError, setPlayersNumberError] = useState('')
     const choicesRef: any = useRef()
     const hintsRef: any = useRef()
+    const questionFormRef = useRef()
 
     choicesRef.current = choices
     hintsRef.current = hints
+    questionFormRef.current = questionForm
 
     useEffect(() => {
         questionMethods.getQuestionDetails()
@@ -65,7 +72,10 @@ export default function Add() {
         errorData,
         hintsRef,
         setHints,
-        hints
+        hints,
+        setImageError,
+        questionFormRef,
+        setPlayersNumberError
     }
     const questionMethods = useQuestions(hooksProps)
 
@@ -84,10 +94,7 @@ export default function Add() {
                     <div className='flex flex-col gap-1'>
                         <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>
-                                <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => {
-                                    if ((value === 'passwordChallenge' || value === 'guessThePlayer') && !hints.length) questionMethods.addHint()
-                                    setQuestionForm({ ...questionForm, questionMode: value })
-                                }} defaultValue={questionForm.questionMode} items={questionModes} label={t("questionMode")} errorMessage={errorData.questionMode ? true : false} />
+                                <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => questionMethods.changeQuestionMode(value)} defaultValue={questionForm.questionMode} items={questionModes} label={t("questionMode")} errorMessage={errorData.questionMode ? true : false} />
                             </div>
                             {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-full h-full" onClick={questionMethods.addHint}>{t('addHint')}</button>}
                         </div>
@@ -106,7 +113,7 @@ export default function Add() {
                                 ))}
                             </div>
                         }
-                        {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') &&
+                        {questionMethods.showHints() &&
                             <div className='mx-5'>
                                 {hints.map((hint: any, index: any) => (
                                     <PasswordChallenge hints={hints} index={index} loading={loading}
@@ -128,11 +135,22 @@ export default function Add() {
                                 <SelectedComponentById disabled={loading || questionMethods.checkShowAnswers()} callbackValue={(value) => setQuestionForm({ ...questionForm, answer: value })} defaultValue={questionForm.answer} items={choices} label={t("answer")} errorMessage={errorData.answer ? true : false} />
                             </div>
                         }
-                        {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') &&
-                            <div className='mt-5'>
-                                <AnswerPlayerSearch disabled={loading} defaultValue={questionForm.answer} playerCallBack={(value) => setQuestionForm({ ...questionForm, answer: value })} />
+                        {questionForm.questionMode === 'guessTheTeam' &&
+                            <div>
+                                {!questionForm.teamImage ? <UploadImage imageError={imageError} imageUploaded={(value: any) => setQuestionForm({ ...questionForm, teamImage: value })} imageNotUploaded={(error: any) => setImageError(error)} /> : <img src={questionForm.teamImage} className='w-full object-cover' />}
                             </div>
                         }
+                        {questionMethods.showPlayerSearch() &&
+                            <div className='mt-5'>
+                                <AnswerPlayerSearch disabled={loading} defaultValue={Array.isArray(questionForm.answer) ? '' : questionForm.answer} playerCallBack={(value) => questionMethods.choosePlayerMethod(value)} />
+                                {playersNumberError && <span className='text-red-500 text-xs'>{t(playersNumberError)}</span>}
+                            </div>
+                        }
+                        {questionForm.teamPlayers && questionForm.teamPlayers.length && questionForm.questionMode === 'guessTheTeam' ? <div className='mt-3 flex flex-col gap-3'>
+                            {questionForm.teamPlayers.map((player: any, index: number) => (
+                                <SinglePlayer player={player} index={index} deletePlayer={() => questionMethods.deletePlayer(index)} />
+                            ))}
+                        </div> : <></>}
                         <div className="mt-5">
                             <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => setQuestionForm({ ...questionForm, difficulty: value })} defaultValue={questionForm.difficulty} items={difficulties} label={t("difficulty")} errorMessage={errorData.difficulty ? true : false} />
                         </div>

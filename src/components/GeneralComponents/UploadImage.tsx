@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import ApiLoadingNotFixed from '../Loadings/ApiLoadingNotFixed'
 import axiosInstance from '../../utilities/axiosInstance'
 
-export default function UploadImage(props) {
+export default function UploadImage(props: any) {
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
-    const handleImageChange = (e) => {
+    const handleImageChange = (e: any) => {
         setLoading(true)
         let formData = new FormData()
         formData.append('image', e.target.files[0])
@@ -22,15 +22,15 @@ export default function UploadImage(props) {
     return (
         <div>
             {!loading ? <div>
-                <div class="relative">
-                    <label for="file-input" class="flex shadow-md items-center justify-center w-full h-full p-6 border-2 bg-gray-200 rounded-lg cursor-pointer">
-                        <div class="text-center">
-                            <div class="text-lg font-medium text-gray-500">{t('dragImage')}</div>
-                            <div class="text-gray-400">{t('or')}</div>
-                            <div class="text-lg font-medium text-indigo-500 hover:text-indigo-600 cursor-pointer">{t('browseFiles')}</div>
+                <div className="relative">
+                    <label htmlFor="file-input" className="flex shadow-md items-center justify-center w-full h-full p-6 border-2 bg-gray-200 rounded-lg cursor-pointer">
+                        <div className="text-center">
+                            <div className="text-lg font-medium text-gray-500">{t('dragImage')}</div>
+                            <div className="text-gray-400">{t('or')}</div>
+                            <div className="text-lg font-medium text-indigo-500 hover:text-indigo-600 cursor-pointer">{t('browseFiles')}</div>
                         </div>
                     </label>
-                    <input type='file' name="image" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} />
+                    <input type='file' name="image" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} />
                 </div>
                 {props.imageError && <span className='text-red-500 text-xs mt-1 block'>{t(props.imageError)}</span>}
             </div> : <ApiLoadingNotFixed loading={loading} />}
