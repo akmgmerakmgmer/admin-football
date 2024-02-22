@@ -17,7 +17,7 @@ export default function Add() {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { id } = useParams()
-    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge']
+    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge', 'guessThePlayer']
     const modes = ['worldCup', 'championsLeague', 'europaLeague', 'premierLeague', 'laliga', 'seriaA', 'bundesliga', 'ligue1', 'africaCup', 'clubWorldCup', 'euros', 'general']
     const trueOrFalseAnswers = ['true', 'false']
     const difficulties = ['easy', 'medium', 'hard']
@@ -68,7 +68,7 @@ export default function Add() {
         hints
     }
     const questionMethods = useQuestions(hooksProps)
-    
+
     return (
         <>
             <ApiLoading loading={pageLoading} />
@@ -85,11 +85,11 @@ export default function Add() {
                         <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>
                                 <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => {
-                                    if (value === 'passwordChallenge' && !hints.length) questionMethods.addHint()
+                                    if ((value === 'passwordChallenge' || value === 'guessThePlayer') && !hints.length) questionMethods.addHint()
                                     setQuestionForm({ ...questionForm, questionMode: value })
                                 }} defaultValue={questionForm.questionMode} items={questionModes} label={t("questionMode")} errorMessage={errorData.questionMode ? true : false} />
                             </div>
-                            {questionForm.questionMode === 'passwordChallenge' && <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-full h-full" onClick={questionMethods.addHint}>{t('addHint')}</button>}
+                            {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-full h-full" onClick={questionMethods.addHint}>{t('addHint')}</button>}
                         </div>
                         {questionMethods.showQuestion() && < div className='flex flex-col gap-5'>
                             <Input value={questionForm.question.en} label={t('questionEn')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { en: value, ar: questionForm.question.ar } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.en'])} />
@@ -106,12 +106,13 @@ export default function Add() {
                                 ))}
                             </div>
                         }
-                        {questionForm.questionMode === 'passwordChallenge' &&
+                        {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') &&
                             <div className='mx-5'>
                                 {hints.map((hint: any, index: any) => (
                                     <PasswordChallenge hints={hints} index={index} loading={loading}
                                         setHints={() => setHints(hintsRef.current)}
                                         setRerender={() => { setRerender(!rerender) }}
+                                        textarea={questionForm.questionMode === 'guessThePlayer'}
                                         // deleteHint={() => deleteHint(index)}
                                         t={t} />
                                 ))}
@@ -127,7 +128,7 @@ export default function Add() {
                                 <SelectedComponentById disabled={loading || questionMethods.checkShowAnswers()} callbackValue={(value) => setQuestionForm({ ...questionForm, answer: value })} defaultValue={questionForm.answer} items={choices} label={t("answer")} errorMessage={errorData.answer ? true : false} />
                             </div>
                         }
-                        {questionForm.questionMode === 'passwordChallenge' &&
+                        {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') &&
                             <div className='mt-5'>
                                 <AnswerPlayerSearch disabled={loading} defaultValue={questionForm.answer} playerCallBack={(value) => setQuestionForm({ ...questionForm, answer: value })} />
                             </div>

@@ -35,7 +35,7 @@ const Input = (props: InputProps) => {
                 defaultValue={props.value}
                 multiline={props.textarea}
                 required={props.required}
-                minRows={props.minRows}
+                minRows={props.textarea ? '4' : '1'}
                 InputLabelProps={{
                     style: {
                         fontSize: '14.5px' // Change this value to the desired font size

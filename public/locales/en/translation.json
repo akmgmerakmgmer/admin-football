@@ -172,6 +172,7 @@
   "multipleChoices": "Multiple Choices",
   "trueOrFalse": "True or False",
   "passwordChallenge": "Password Challenge",
+  "guessThePlayer": "Guess The Player",
   "hintInEnglish": "Hint in English",
   "hintInArabic": "Hint in Arabic",
   "addHint": "Add Hint",

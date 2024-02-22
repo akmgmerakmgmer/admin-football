@@ -39,7 +39,7 @@ export default function useQuestions(props: any) {
                     if (choicesRef.current[i].en.trim() === '' || choicesRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_choices' })
                 }
             }
-            if (questionForm.questionMode === 'passwordChallenge') {
+            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') {
                 for (let i in hintsRef.current) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }

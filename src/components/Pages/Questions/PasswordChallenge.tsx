@@ -8,7 +8,8 @@ type PasswordChallengeProps = {
     setRerender: () => void,
     // deleteHint: () => void
     loading: boolean,
-    t: any
+    t: any,
+    textarea?: boolean
 }
 export default function PasswordChallenge(props: PasswordChallengeProps) {
     return (
@@ -17,12 +18,12 @@ export default function PasswordChallenge(props: PasswordChallengeProps) {
                 props.hints[props.index].en = value
                 props.setHints()
                 props.setRerender()
-            }} width="w-full" disabled={props.loading} />
+            }} width="w-full" disabled={props.loading} textarea={props.textarea} />
             <Input value={props.hints[props.index]?.ar} label={props.t('hintInArabic')} inputValue={(value: string) => {
                 props.hints[props.index].ar = value
                 props.setHints()
                 props.setRerender()
-            }} width="w-full" disabled={props.loading} />
+            }} width="w-full" disabled={props.loading} textarea={props.textarea} />
             {/* <div className='cursor-pointer' onClick={props.deleteHint}>
                 <Delete color='error' />
             </div> */}

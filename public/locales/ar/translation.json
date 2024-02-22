@@ -289,6 +289,7 @@
   "missing_choices": "املئ الاختيارات الفارغة",
   "missing_hints": "املئ علي الاقل تلميح واحد",
   "passwordChallenge": "كلمة السر",
+  "guessThePlayer":"خمن اللاعب",
   "hintInEnglish": "التلميح بالانجليزية",
   "hintInArabic": "التلميح بالعربية",
   "addHint": "أضف تلميح",
