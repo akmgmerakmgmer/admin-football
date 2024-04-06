@@ -16,7 +16,8 @@ type SingleSubcategoryProps = {
         points: number,
         coins: number,
         disabled: boolean,
-        roles: [string]
+        roles: [string],
+        games_played: number
     },
     deleteFunc: (id: string) => void,
     disableFunc: (id: string) => void,
@@ -66,7 +67,7 @@ export default function SingleUser(props: SingleSubcategoryProps) {
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
-                    <div className="font-medium text-gray-900">{props.value.points}</div>
+                    <div className="font-medium text-gray-900">{props.value.games_played}</div>
                 </div>
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">

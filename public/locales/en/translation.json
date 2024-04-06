@@ -135,6 +135,7 @@
   "bankName": "Bank Name",
   "points": "Points",
   "coins": "Coins",
+  "gamesPlayed": "Games Played",
   "players": "Players",
   "noPlayersAvailable": "No Players Available",
   "editPlayer": "Edit Player",
