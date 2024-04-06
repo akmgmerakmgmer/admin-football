@@ -14,6 +14,7 @@ import PasswordChallenge from './PasswordChallenge'
 import AnswerPlayerSearch from './AnswerPlayerSearch'
 import UploadImage from '../../GeneralComponents/UploadImage'
 import SinglePlayer from './SinglePlayer'
+import { Delete } from '@material-ui/icons'
 
 export default function Add() {
     const { t } = useTranslation()
@@ -41,6 +42,7 @@ export default function Add() {
     const [errorData, setErrorData] = useState({ 'question.ar': '', 'question.en': '', answer: '', difficulty: '', questionMode: '' })
     const [loading, setLoading] = useState(false)
     const [pageLoading, setPageLoading] = useState(true)
+    const [translateLoading, setTranslateLoading] = useState(false)
     const [rerender, setRerender] = useState(false)
     const [playersNumberError, setPlayersNumberError] = useState('')
     const choicesRef: any = useRef()
@@ -75,7 +77,8 @@ export default function Add() {
         hints,
         setImageError,
         questionFormRef,
-        setPlayersNumberError
+        setPlayersNumberError,
+        setTranslateLoading,
     }
     const questionMethods = useQuestions(hooksProps)
 
@@ -98,9 +101,15 @@ export default function Add() {
                             </div>
                             {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-full h-full" onClick={questionMethods.addHint}>{t('addHint')}</button>}
                         </div>
-                        {questionMethods.showQuestion() && < div className='flex flex-col gap-5'>
-                            <Input value={questionForm.question.en} label={t('questionEn')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { en: value, ar: questionForm.question.ar } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.en'])} />
-                            <Input value={questionForm.question.ar} label={t('questionAr')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { ar: value, en: questionForm.question.en } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.ar'])} />
+                        {questionMethods.showQuestion() && < div className='flex flex-col gap-1'>
+                            <div className='flex gap-3 items-center'>
+                                <Input value={questionForm.question.en} label={t('questionEn')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { en: value, ar: questionForm.question.ar } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.en'])} />
+                                {/* <button className='bg-primaryColor py-4 px-3 rounded-lg whitespace-nowrap text-xs mt-5 text-white' onClick={() => questionMethods.translate('en', 'ar', questionForm.question.en)}>{translateLoading ? <ButtonLoading loading={translateLoading} /> : t('translateToArabic')}</button> */}
+                            </div>
+                            <div className='flex gap-3 items-center'>
+                                <Input value={questionForm.question.ar} label={t('questionAr')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { ar: value, en: questionForm.question.en } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.ar'])} />
+                                {/* <button className='bg-primaryColor py-4 px-3 rounded-lg whitespace-nowrap text-xs mt-5 text-white' onClick={() => questionMethods.translate('ar', 'en', questionForm.question.ar)}>{translateLoading ? <ButtonLoading loading={translateLoading} /> : t('translateToEnglish')}</button> */}
+                            </div>
                         </div>}
                         <span className='text-red-500 text-xs'>{t(errorData.questionMode)}</span>
                         {questionForm.questionMode === 'multipleChoices' &&
@@ -116,11 +125,22 @@ export default function Add() {
                         {questionMethods.showHints() &&
                             <div className='mx-5'>
                                 {hints.map((hint: any, index: any) => (
-                                    <PasswordChallenge hints={hints} index={index} loading={loading}
-                                        setHints={() => setHints(hintsRef.current)}
-                                        setRerender={() => { setRerender(!rerender) }}
+                                    <PasswordChallenge index={index} loading={loading}
+                                        hintEnglishCallback={(value) => {
+                                            hints[index].en = value
+                                        }}
+                                        hintArabicCallBack={(value) => {
+                                            hints[index].ar = value
+                                        }}
+                                        valueAr={hints[index].ar}
+                                        valueEn={hints[index].en}
                                         textarea={questionForm.questionMode === 'guessThePlayer'}
-                                        // deleteHint={() => deleteHint(index)}
+                                        showDelete={hints.length > 1}
+                                        deleteHint={() => {
+                                            const newHints = [...hints];
+                                            newHints.splice(index, 1);
+                                            setHints(newHints);
+                                        }}
                                         t={t} />
                                 ))}
                             </div>
@@ -137,7 +157,13 @@ export default function Add() {
                         }
                         {questionForm.questionMode === 'guessTheTeam' &&
                             <div>
-                                {!questionForm.teamImage ? <UploadImage imageError={imageError} imageUploaded={(value: any) => setQuestionForm({ ...questionForm, teamImage: value })} imageNotUploaded={(error: any) => setImageError(error)} /> : <img src={questionForm.teamImage} className='w-full object-cover' />}
+                                {!questionForm.teamImage ? <UploadImage imageError={imageError} imageUploaded={(value: any) => setQuestionForm({ ...questionForm, teamImage: value })} imageNotUploaded={(error: any) => setImageError(error)} /> :
+                                    <div className='relative'>
+                                        <img src={questionForm.teamImage} className='w-full object-cover' />
+                                        <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setQuestionForm({ ...questionForm, teamImage: '' })}>
+                                            <Delete color='error' />
+                                        </div>
+                                    </div>}
                             </div>
                         }
                         {questionMethods.showPlayerSearch() &&

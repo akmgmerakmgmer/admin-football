@@ -18,7 +18,8 @@ export default function useQuestions(props: any) {
         setHints,
         hints,
         setImageError,
-        setPlayersNumberError
+        setPlayersNumberError,
+        setTranslateLoading
     } = props
     const addHint = () => {
         const newHintsValue = [...hints, { en: '', ar: '' }]
@@ -54,6 +55,7 @@ export default function useQuestions(props: any) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }
             }
+            if ((questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && hints.length > 5) return setPlayersNumberError('maximum_hints')
             if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
             if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)
@@ -81,6 +83,7 @@ export default function useQuestions(props: any) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }
             }
+            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer' && hints.length > 5) return setPlayersNumberError('maximum_hints')
             if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
             if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)
@@ -113,6 +116,13 @@ export default function useQuestions(props: any) {
             questionForm.answer.splice(index, 1)
             setQuestionForm({ ...questionForm, teamPlayers: [...questionForm.teamPlayers], answer: [...questionForm.answer] })
 
+        },
+        translate: (from: string, to: string, msg: string) => {
+            setTranslateLoading(true)
+            axiosInstance.post('translate', { from: from, to: to, msg: msg }).then(response => {
+                if (from === 'en') setQuestionForm({ ...questionForm, question: { en: questionForm.question.en, ar: response.data } })
+                else setQuestionForm({ ...questionForm, question: { en: response.data, ar: questionForm.question.ar } })
+            }).finally(() => setTranslateLoading(false))
         }
     }
 }

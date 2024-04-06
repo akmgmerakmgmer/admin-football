@@ -49,9 +49,9 @@ export default function TopBar() {
     }
     useEffect(() => {
         if (effectRan.current === false) {
-            // if (i18n.language !== 'ar' && i18n.language !== 'en') {
-            //     i18n.changeLanguage('ar');
-            // }
+            if (i18n.language !== 'ar' && i18n.language !== 'en') {
+                i18n.changeLanguage('ar');
+            }
             getStoreItems()
             effectRan.current = true
         }
