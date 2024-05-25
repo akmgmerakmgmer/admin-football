@@ -10,7 +10,8 @@ type SingleQuestionProps = {
             en: string,
             ar: string
         },
-        questionMode: string
+        questionMode: string,
+        answer: string
     },
     deleteFunc: (id: string) => void,
     enableFunc: (id: string) => void
@@ -28,6 +29,11 @@ export default function SingleQuestion(props: SingleQuestionProps) {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
                     <div className="font-medium text-gray-900">{props.value.question.ar}</div>
+                </div>
+            </td>
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
+                <div>
+                    <div className="font-medium text-gray-900">{typeof (props.value.answer) === 'string' ? t(props.value.answer) : 'Multiple Answers'}</div>
                 </div>
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">

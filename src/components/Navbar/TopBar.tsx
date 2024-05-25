@@ -13,6 +13,7 @@ import NavDrawer from './NavDrawer';
 import FullScreenLoading from '../Loadings/FullScreenLoading';
 import { CSSTransition } from 'react-transition-group';
 import axiosInstance from '../../utilities/axiosInstance';
+
 export default function TopBar() {
     //Data
     const effectRan = useRef<any>(false)
@@ -75,7 +76,7 @@ export default function TopBar() {
             >
                 <FullScreenLoading />
             </CSSTransition>
-            <h1 className='font-bold whitespace-nowrap tracking-wider'>Arena Games</h1>
+            <h1 className='font-bold whitespace-nowrap tracking-wider'>InZone</h1>
             <div className='lg:flex hidden items-center gap-2.5 w-full justify-end'>
                 <Select buttonName={i18n.language === 'en' ? 'English' : 'عربي'} menuItems={langs} />
                 {!user.username ? <Link to={'/login'}><LoginIcon /></Link> : <Select buttonName={<Avatar />} menuItems={!user.username ? accountProfileLogin : accountProfileLogout} divide={true} />}

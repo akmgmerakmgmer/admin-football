@@ -25,6 +25,8 @@ const Login = lazy(() => import('./pages/Login'));
 const Profile = lazy(() => import('./pages/Users/Profile'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
 const EditUser = lazy(() => import('./pages/Users/EditUser'));
+const AddAndEditAd = lazy(() => import('./pages/Advertisment/AddAndEditAd'));
+const Advertisments = lazy(() => import('./pages/Advertisment/Advertisments'));
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 function App() {
@@ -100,6 +102,9 @@ function App() {
                           <Route path='/questions' element={<Questions />} />
                           <Route path='/add-question' element={<AddQuestion />} />
                           <Route path='/edit-question/:id' element={<EditQuestion />} />
+                          <Route path='/advertisments' element={<Advertisments />} />
+                          <Route path='/add-advertisment' element={<AddAndEditAd />} />
+                          <Route path='/edit-advertisment/:id' element={<AddAndEditAd />} />
                           <Route path='/login' element={<Login />} />
                           {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}
                           {/* <Route path='/reset-password/:token' element={<ResetPassword />} /> */}
