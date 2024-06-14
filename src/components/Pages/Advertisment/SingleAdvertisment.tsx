@@ -11,7 +11,8 @@ type SingleAdvertismentProps = {
         directionLink: string,
         status: string,
         image: string,
-        priority: number
+        priority: number,
+        clicks: number,
         _id: string
     },
     deleteFunc: (id: string) => void,
@@ -45,11 +46,16 @@ export default function SingleUser(props: SingleAdvertismentProps) {
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
+                    <div className="font-medium text-gray-900">{props.value.clicks.toString()}</div>
+                </div>
+            </td>
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
+                <div>
                     {props.value.status === 'active' ? <Status color='bg-green-500' title={t('active')} /> : <Status color='bg-red-500' title={t('disabled')} />}
                 </div>
             </td>
             <EditAndDelete
-                route={`/edit-player/${props.value._id}`}
+                route={`/edit-advertisment/${props.value._id}`}
                 deleteFunc={() => props.deleteFunc(props.value._id)}
                 showDisable={props.value.status == 'active'}
                 disableFunc={() => props.disableFunc(props.value._id)}

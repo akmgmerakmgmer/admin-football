@@ -6,6 +6,7 @@ import SingleQuestion from './SingleQuestion'
 import EmptyProduct from '../Cart/EmptyProduct'
 import Input from '../../TextFields/Input'
 import axiosInstance from '../../../utilities/axiosInstance'
+import SelectedComponent from '../../GeneralComponents/SelectComponent'
 
 export default function MainQuestions() {
     const { t } = useTranslation()
@@ -14,16 +15,18 @@ export default function MainQuestions() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("questionEn"), t("questionAr"), t('questionMode'), t('answer')]
+    const tableHeads = [t("questionEn"), t("questionAr"), t('answer'), t('questionMode'),]
     const [checkBoxItems, setCheckBoxItems] = useState([])
+    const questionModes = ['multipleChoices', 'trueOrFalse']
     const questionSearch = useRef('')
+    const questionMode = useRef('')
     useEffect(() => {
         getQuestions()
     }, [])
 
     const getQuestions = () => {
         setLoading(true)
-        axiosInstance.get(`admin-questions?page=${pageNumber.current}&question=${questionSearch.current}`).then(response => {
+        axiosInstance.get(`admin-questions?page=${pageNumber.current}&question=${questionSearch.current}&questionMode=${questionMode.current}`).then(response => {
             setQuestions(response.data.question)
             setTotalItems(response.data.total_questions)
             setItemsPerPage(response.data.per_page)
@@ -60,10 +63,15 @@ export default function MainQuestions() {
         })
     }
 
+    const chooseQuestionType = (value: string) => {
+        questionMode.current = value
+        getQuestions()
+    }
     return (
         <div>
             <div className='mb-5 flex md:flex-row flex-col gap-5 md:mx-10 mx-5 items-center justify-center'>
-                <Input label={t('name')} required={false} inputValue={(value: string) => questionSearch.current = value} width="w-full mt-0" disabled={loading} />
+                <Input label={t('searchQuestion')} required={false} inputValue={(value: string) => questionSearch.current = value} width="w-full mt-0" disabled={loading} />
+                <SelectedComponent translation disabled={loading} defaultValue={""} label={t('categories')} items={questionModes} callbackValue={(value) => chooseQuestionType(value)} />
                 <button className='px-10 h-12 md:w-auto w-full bg-gradient text-sm text-white rounded-md' onClick={() => {
                     pageNumber.current = 1
                     getQuestions()

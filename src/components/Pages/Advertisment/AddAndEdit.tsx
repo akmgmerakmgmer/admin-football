@@ -13,12 +13,12 @@ import axiosInstance from '../../../utilities/axiosInstance'
 export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
-    const advertisePages = ['gamePage']
+    const advertisePages = ['gamePage','websitePages']
     const priorities = [1, 2, 3, 4]
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [advertismentForm, setAdvertismentForm] = useState({ image: '', company: '', advertiseAt: 'gamePage', priority: 1, status: 'active', directionLink: '' })
-    const [errorData, setErrorData] = useState({ company: '', advertiseAt: '', directionLink: '', image: '' })
+    const [advertismentForm, setAdvertismentForm] = useState({ image: '', company: '', advertiseAt: 'gamePage', priority: 1, status: 'active', directionLink: '', headline: { en: "", ar: "" } })
+    const [errorData, setErrorData] = useState({ company: '', advertiseAt: '', directionLink: '', image: '', 'headline.en': '', 'headline.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
     const navigate = useNavigate()
@@ -65,6 +65,9 @@ export default function AddAndEdit() {
             navigate('/advertisments')
         }).catch(err => {
             setErrorData(err.response.data)
+            if (err.response.data.message) {
+                setGeneralError(err.response.data.message)
+            }
         }).finally(() => {
             setLoading(false)
         })
@@ -92,6 +95,12 @@ export default function AddAndEdit() {
                         </div>
                         <div className='flex gap-3 items-center'>
                             <Input value={advertismentForm.company} label={t('companyName')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, company: value })} width="w-full" disabled={loading} errorMessage={t(errorData.company)} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input value={advertismentForm.headline.en} label={t('englishHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, en: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.en'])} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input value={advertismentForm.headline.ar} label={t('arabicHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, ar: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.ar'])} />
                         </div>
                         <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>

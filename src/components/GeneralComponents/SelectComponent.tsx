@@ -20,7 +20,7 @@ type SelectedComponentProps = {
 
 
 export default function SelectedComponent(props: SelectedComponentProps) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const itemSelected = React.useRef(false)
     return (
         <FormControl fullWidth>
@@ -42,7 +42,7 @@ export default function SelectedComponent(props: SelectedComponentProps) {
             >
                 {props.items.map((item: string) => {
                     return (
-                        <MenuItem value={item} key={item}><span className="capitalize text-sm">{props.uppercase ? t(item) : props.translation ? t(item.toLowerCase()) : item}</span> </MenuItem>
+                        <MenuItem value={item} key={item}><span className="capitalize text-sm">{props.uppercase ? t(item) : props.translation ? t(item) : item}</span> </MenuItem>
                     )
                 })}
             </Select>

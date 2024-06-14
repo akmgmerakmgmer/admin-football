@@ -15,7 +15,7 @@ export default function MainAdvertisment() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("companyName"), t("advertiseAt"), t('priority'), t("status")]
+    const tableHeads = [t("companyName"), t("advertiseAt"), t('priority'), t('adClicked'), t("status")]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     const companySearch = useRef('')
     const [generalMessage, setGeneralMessage] = useState({ en: "", ar: "" })
@@ -26,7 +26,7 @@ export default function MainAdvertisment() {
 
     const getAdvertisments = () => {
         setLoading(true)
-        axiosInstance.get(`advertisments?page=${pageNumber.current}&company=${companySearch.current}&advertiseAt=gamePage`).then(response => {
+        axiosInstance.get(`admin-advertisments?page=${pageNumber.current}&company=${companySearch.current}&advertiseAt=`).then(response => {
             setAdvertisments(response.data.advertisments)
             setTotalItems(response.data.total_ads)
             setItemsPerPage(response.data.per_page)
