@@ -38,7 +38,7 @@ export default function TopBar() {
     ]
 
 
-    const getStoreItems = async () => {
+    const getInitialData = async () => {
         if (token) {
             await axiosInstance.post('current-user', { data: { 'token': token } }).then(async response => {
                 dispatch(fetchUserDone(response.data))
@@ -50,10 +50,7 @@ export default function TopBar() {
     }
     useEffect(() => {
         if (effectRan.current === false) {
-            if (i18n.language !== 'ar' && i18n.language !== 'en') {
-                i18n.changeLanguage('ar');
-            }
-            getStoreItems()
+            getInitialData()
             effectRan.current = true
         }
 

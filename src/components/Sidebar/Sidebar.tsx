@@ -14,6 +14,7 @@ import { fetchUserDone } from '../../redux/user';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import QuizIcon from '@mui/icons-material/Quiz';
 import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
+import { DynamicForm } from '@mui/icons-material';
 
 type SidebarProps = {
     closeDrawer: () => void,
@@ -46,6 +47,11 @@ export default function Sidebar(props: SidebarProps) {
             name: 'questions',
             route: '/questions',
             icon: <QuizIcon />
+        },
+        {
+            name: 'challenges',
+            route: '/challenges',
+            icon: <DynamicForm />
         },
         {
             name: 'advertisments',
