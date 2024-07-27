@@ -2,19 +2,16 @@ import React from 'react'
 import SingleCheckboxes from '../../GeneralComponents/SingleCheckboxes'
 import { useTranslation } from 'react-i18next'
 import EditAndDelete from '../../GeneralComponents/EditAndDelete'
-type SingleChallengeProp = {
+type SingleAvatarProp = {
     checkBoxItems: any[],
     value: {
         _id: string,
-        nameEn: string,
-        nameAr: string,
+        price: number
         image: string,
-        type: string
     },
     deleteFunc: (id: string) => void,
-    enableFunc: (id: string) => void
 }
-export default function SingleChallenge(props: SingleChallengeProp) {
+export default function SingleAvatar(props: SingleAvatarProp) {
     const { t } = useTranslation()
     return (
         <tr>
@@ -26,20 +23,10 @@ export default function SingleChallenge(props: SingleChallengeProp) {
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
-                    <div className="font-medium text-gray-900">{props.value.nameEn}</div>
+                    <div className="font-medium text-gray-900">{t(props.value.price.toString())}</div>
                 </div>
             </td>
-            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
-                <div>
-                    <div className="font-medium text-gray-900">{props.value.nameAr}</div>
-                </div>
-            </td>
-            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
-                <div>
-                    <div className="font-medium text-gray-900">{t(props.value.type)}</div>
-                </div>
-            </td>
-            <EditAndDelete route={`/edit-challenge/${props.value._id}`} deleteFunc={() => props.deleteFunc(props.value._id)} />
+            <EditAndDelete route={`/edit-avatar/${props.value._id}`} deleteFunc={() => props.deleteFunc(props.value._id)} />
         </tr>
 
     )

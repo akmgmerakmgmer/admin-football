@@ -128,9 +128,9 @@ export default function Table(props: TableProps) {
                                                 {props.showCheckbox && <th scope="col" className="py-3.5 ltr:pl-4 rtl:pr-4 ltr:text-left rtl:text-right text-xs font-semibold text-gray-900 sm:pl-6 whitespace-nowrap">
                                                     <Checkbox color='primary' onChange={(e) => props.checkAll(e.target.checked)} />
                                                 </th>}
-                                                {props.tableHeads.map((head: string) => {
+                                                {props.tableHeads.map((head: string, index: number) => {
                                                     return (
-                                                        <th scope="col" className="py-3.5 ltr:pl-4 rtl:pr-4 ltr:text-left rtl:text-right text-xs font-semibold text-gray-900 sm:pl-6 whitespace-nowrap">
+                                                        <th key={index} scope="col" className="py-3.5 ltr:pl-4 rtl:pr-4 ltr:text-left rtl:text-right text-xs font-semibold text-gray-900 sm:pl-6 whitespace-nowrap">
                                                             {head}
                                                         </th>
                                                     )
