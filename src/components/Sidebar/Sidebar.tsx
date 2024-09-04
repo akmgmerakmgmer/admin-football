@@ -14,8 +14,10 @@ import { fetchUserDone } from '../../redux/user';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import QuizIcon from '@mui/icons-material/Quiz';
 import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
-import { DynamicForm } from '@mui/icons-material';
+import { DynamicForm, ShoppingCart } from '@mui/icons-material';
 import FaceIcon from '@mui/icons-material/Face';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import StairsIcon from '@mui/icons-material/Stairs';
 
 type SidebarProps = {
     closeDrawer: () => void,
@@ -63,6 +65,21 @@ export default function Sidebar(props: SidebarProps) {
             name: 'avatars',
             route: `/avatars`,
             icon: <FaceIcon />
+        },
+        {
+            name: 'perks',
+            route: `/perks`,
+            icon: <StairsIcon />
+        },
+        {
+            name: 'shopItems',
+            route: `/shop-items`,
+            icon: <ShoppingCart />
+        },
+        {
+            name: 'transactions',
+            route: '/transactions',
+            icon: <AddCardIcon />
         },
         {
             name: 'profile',

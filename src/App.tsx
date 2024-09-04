@@ -31,6 +31,11 @@ const Challenges = lazy(() => import('./pages/Challenges/Challenges'));
 const AddAndEditChallenge = lazy(() => import('./pages/Challenges/AddAndEditChallenge'));
 const Avatars = lazy(() => import('./pages/Avatars/Avatars'));
 const AddAndEditAvatars = lazy(() => import('./pages/Avatars/AddAndEditAvatars'));
+const ShopItems = lazy(() => import('./pages/ShopItems/ShopItems'));
+const AddAndEditShopItems = lazy(() => import('./pages/ShopItems/AddAndEditShopItems'));
+const Perks = lazy(() => import('./pages/Perks/Perks'));
+const AddAndEditPerks = lazy(() => import('./pages/Perks/AddAndEditPerks'));
+const Transactions = lazy(() => import('./pages/Transactions/Transactions'));
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 function App() {
@@ -115,6 +120,13 @@ function App() {
                           <Route path='/avatars' element={<Avatars />} />
                           <Route path='/add-avatar' element={<AddAndEditAvatars />} />
                           <Route path='/edit-avatar/:id' element={<AddAndEditAvatars />} />
+                          <Route path='/shop-items' element={<ShopItems />} />
+                          <Route path='/add-shop-item' element={<AddAndEditShopItems />} />
+                          <Route path='/edit-shop-item/:id' element={<AddAndEditShopItems />} />
+                          <Route path='/perks' element={<Perks />} />
+                          <Route path='/add-perk' element={<AddAndEditPerks />} />
+                          <Route path='/edit-perk/:id' element={<AddAndEditPerks />} />
+                          <Route path='/transactions' element={<Transactions />} />
                           <Route path='/login' element={<Login />} />
                           {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}
                           {/* <Route path='/reset-password/:token' element={<ResetPassword />} /> */}

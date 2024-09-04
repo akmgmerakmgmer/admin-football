@@ -13,11 +13,11 @@ import axiosInstance from '../../../utilities/axiosInstance'
 export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
-    const advertisePages = ['gamePage','websitePages']
+    const advertisePages = ['gamePage', 'websitePages', 'bestOffers']
     const priorities = [1, 2, 3, 4]
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [advertismentForm, setAdvertismentForm] = useState({ image: '', company: '', advertiseAt: 'gamePage', priority: 1, status: 'active', directionLink: '', headline: { en: "", ar: "" } })
+    const [advertismentForm, setAdvertismentForm] = useState({ image: '', company: '', advertiseAt: 'gamePage', priority: 1, status: 'active', directionLink: '', headline: { en: "", ar: "" }, description: { en: "", ar: "" } })
     const [errorData, setErrorData] = useState({ company: '', advertiseAt: '', directionLink: '', image: '', 'headline.en': '', 'headline.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
@@ -94,26 +94,32 @@ export default function AddAndEdit() {
                             </div>}
                         </div>
                         <div className='flex gap-3 items-center'>
-                            <Input value={advertismentForm.company} label={t('companyName')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, company: value })} width="w-full" disabled={loading} errorMessage={t(errorData.company)} />
+                            <Input required value={advertismentForm.company} label={t('companyName')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, company: value })} width="w-full" disabled={loading} errorMessage={t(errorData.company)} />
                         </div>
                         <div className='flex gap-3 items-center'>
-                            <Input value={advertismentForm.headline.en} label={t('englishHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, en: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.en'])} />
+                            <Input required value={advertismentForm.headline.en} label={t('englishHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, en: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.en'])} />
                         </div>
                         <div className='flex gap-3 items-center'>
-                            <Input value={advertismentForm.headline.ar} label={t('arabicHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, ar: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.ar'])} />
+                            <Input required value={advertismentForm.headline.ar} label={t('arabicHeadline')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, headline: { ...advertismentForm.headline, ar: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['headline.ar'])} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input textarea value={advertismentForm.description?.en || ''} label={t('descriptionEn')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, description: { ...advertismentForm.description, en: value } })} width="w-full" disabled={loading} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input textarea value={advertismentForm.description?.ar || ''} label={t('descriptionAr')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, description: { ...advertismentForm.description, ar: value } })} width="w-full" disabled={loading} />
                         </div>
                         <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>
-                                <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => setAdvertismentForm({ ...advertismentForm, advertiseAt: value })} defaultValue={advertismentForm.advertiseAt} items={advertisePages} label={t("advertiseAt")} errorMessage={errorData.advertiseAt ? true : false} />
+                                <SelectedComponent required disabled={loading} uppercase={true} translation={true} callbackValue={(value) => setAdvertismentForm({ ...advertismentForm, advertiseAt: value })} defaultValue={advertismentForm.advertiseAt} items={advertisePages} label={t("advertiseAt")} errorMessage={errorData.advertiseAt ? true : false} />
                             </div>
                         </div>
-                        <div className="mt-5 flex items-center gap-3">
+                        {/* <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>
                                 <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => setAdvertismentForm({ ...advertismentForm, priority: value })} defaultValue={advertismentForm.priority} items={priorities} label={t("priority")} />
                             </div>
-                        </div>
+                        </div> */}
                         <div className='flex gap-3 items-center'>
-                            <Input value={advertismentForm.directionLink} label={t('link')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, directionLink: value })} width="w-full" disabled={loading} errorMessage={t(errorData.directionLink)} />
+                            <Input required value={advertismentForm.directionLink} label={t('link')} inputValue={(value: string) => setAdvertismentForm({ ...advertismentForm, directionLink: value })} width="w-full" disabled={loading} errorMessage={t(errorData.directionLink)} />
                         </div>
                         <button className={`w-full h-12 bg-primaryColor mt-7 text-white rounded-md`} onClick={id ? editAdvertisment : addAdvertisment}>
                             {loading ? <ButtonLoading loading={loading} /> : <span>{id ? t('editAdvertisment') : t('addAdvertisment')}</span>}
