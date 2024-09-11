@@ -19,7 +19,10 @@ export default function useQuestions(props: any) {
         hints,
         setImageError,
         setPlayersNumberError,
-        setTranslateLoading
+        setTranslateLoading,
+        isDeveloper,
+        developerQuestions,
+        setDeveloperError
     } = props
     const addHint = () => {
         const newHintsValue = [...hints, { en: '', ar: '' }]
@@ -45,6 +48,26 @@ export default function useQuestions(props: any) {
             setQuestionForm({ ...questionForm, questionMode: value, answer: '' })
         },
         addQuestion: () => {
+            if (isDeveloper && developerQuestions.current) {
+                setLoading(true)
+                const payload = JSON.parse(developerQuestions.current);
+                for (let i in payload) {
+                    if (payload[i].answer == 'true' || payload[i].answer == 'false') {
+                        payload[i]['questionMode'] = 'trueOrFalse'
+                    } else {
+                        payload[i]['questionMode'] = 'multipleChoices'
+                    }
+                    payload[i]['mode'] = questionForm.mode || 'general'
+                    payload[i]['difficulty'] = questionForm.difficulty || 'medium'
+                }
+                return axiosInstance.post('questions', payload).then(response => {
+                }).catch(err=>{
+                    setDeveloperError(err.response.data.message)
+                }).finally(() => {
+                    setLoading(false)
+                })
+            }
+
             if (questionForm.questionMode === 'multipleChoices') {
                 for (let i in choicesRef.current) {
                     if (choicesRef.current[i].en.trim() === '' || choicesRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_choices' })

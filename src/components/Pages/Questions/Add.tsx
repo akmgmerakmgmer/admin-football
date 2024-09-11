@@ -15,6 +15,8 @@ import AnswerPlayerSearch from './AnswerPlayerSearch'
 import UploadImage from '../../GeneralComponents/UploadImage'
 import SinglePlayer from './SinglePlayer'
 import { Delete } from '@material-ui/icons'
+import Checkbox from '@mui/material/Checkbox';
+import { FormControlLabel } from '@material-ui/core'
 
 export default function Add() {
     const { t } = useTranslation()
@@ -45,9 +47,12 @@ export default function Add() {
     const [translateLoading, setTranslateLoading] = useState(false)
     const [rerender, setRerender] = useState(false)
     const [playersNumberError, setPlayersNumberError] = useState('')
+    const [isDeveloper, setIsDeveloper] = useState(false)
+    const [developerError, setDeveloperError] = useState('')
     const choicesRef: any = useRef()
     const hintsRef: any = useRef()
     const questionFormRef = useRef()
+    const developerQuestions = useRef('')
 
     choicesRef.current = choices
     hintsRef.current = hints
@@ -79,6 +84,9 @@ export default function Add() {
         questionFormRef,
         setPlayersNumberError,
         setTranslateLoading,
+        isDeveloper,
+        developerQuestions,
+        setDeveloperError
     }
     const questionMethods = useQuestions(hooksProps)
 
@@ -94,14 +102,21 @@ export default function Add() {
 
                 <div>
                     <h2 className='text-xl'>{id ? t("editQuestion") : t("addQuestion")}</h2>
+
                     <div className='flex flex-col gap-1'>
-                        <div className="mt-5 flex items-center gap-3">
+                        {!id && <div className='self-start'>
+                            <FormControlLabel control={<Checkbox checked={isDeveloper} onChange={(e: any) => setIsDeveloper(e.target.checked)} />} label="ChatGPT" />
+                        </div>}
+                        {isDeveloper && <div>
+                            <Input errorMessage={developerError} value={developerQuestions.current} label={'ChatGPT'} inputValue={(value: string) => developerQuestions.current = value} width="w-full" disabled={loading} textarea={true} />
+                        </div>}
+                        {!isDeveloper && <div className="mt-5 flex items-center gap-3">
                             <div className='flex-1 self-start'>
                                 <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => questionMethods.changeQuestionMode(value)} defaultValue={questionForm.questionMode} items={questionModes} label={t("questionMode")} errorMessage={errorData.questionMode ? true : false} />
                             </div>
                             {(questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-full h-full" onClick={questionMethods.addHint}>{t('addHint')}</button>}
-                        </div>
-                        {questionMethods.showQuestion() && < div className='flex flex-col gap-1'>
+                        </div>}
+                        {questionMethods.showQuestion() && !isDeveloper && < div className='flex flex-col gap-1'>
                             <div className='flex gap-3 items-center'>
                                 <Input value={questionForm.question.en} label={t('questionEn')} inputValue={(value: string) => setQuestionForm({ ...questionForm, question: { en: value, ar: questionForm.question.ar } })} width="w-full" disabled={loading} errorMessage={t(errorData['question.en'])} />
                                 {/* <button className='bg-primaryColor py-4 px-3 rounded-lg whitespace-nowrap text-xs mt-5 text-white' onClick={() => questionMethods.translate('en', 'ar', questionForm.question.en)}>{translateLoading ? <ButtonLoading loading={translateLoading} /> : t('translateToArabic')}</button> */}
@@ -112,7 +127,7 @@ export default function Add() {
                             </div>
                         </div>}
                         <span className='text-red-500 text-xs'>{t(errorData.questionMode)}</span>
-                        {questionForm.questionMode === 'multipleChoices' &&
+                        {questionForm.questionMode === 'multipleChoices' && !isDeveloper &&
                             <div className='mx-5'>
                                 {choices.map((choice: any, index: any) => (
                                     <MultipleChoices choices={choices} index={index} loading={loading}
@@ -122,7 +137,7 @@ export default function Add() {
                                 ))}
                             </div>
                         }
-                        {questionMethods.showHints() &&
+                        {questionMethods.showHints() && !isDeveloper &&
                             <div className='mx-5'>
                                 {hints.map((hint: any, index: any) => (
                                     <PasswordChallenge index={index} loading={loading}
@@ -145,17 +160,17 @@ export default function Add() {
                                 ))}
                             </div>
                         }
-                        {questionForm.questionMode === 'trueOrFalse' &&
+                        {questionForm.questionMode === 'trueOrFalse' && !isDeveloper &&
                             <div className="mt-5">
                                 <SelectedComponent disabled={loading} uppercase={true} translation={true} callbackValue={(value) => setQuestionForm({ ...questionForm, answer: value })} defaultValue={questionForm.answer} items={trueOrFalseAnswers} label={t("answer")} errorMessage={errorData.answer ? true : false} />
                             </div>
                         }
-                        {questionForm.questionMode === 'multipleChoices' &&
+                        {questionForm.questionMode === 'multipleChoices' && !isDeveloper &&
                             <div className="mt-5">
                                 <SelectedComponentById disabled={loading || questionMethods.checkShowAnswers()} callbackValue={(value) => setQuestionForm({ ...questionForm, answer: value })} defaultValue={questionForm.answer} items={choices} label={t("answer")} errorMessage={errorData.answer ? true : false} />
                             </div>
                         }
-                        {questionForm.questionMode === 'guessTheTeam' &&
+                        {questionForm.questionMode === 'guessTheTeam' && !isDeveloper &&
                             <div>
                                 {!questionForm.teamImage ? <UploadImage imageError={imageError} imageUploaded={(value: any) => setQuestionForm({ ...questionForm, teamImage: value })} imageNotUploaded={(error: any) => setImageError(error)} /> :
                                     <div className='relative'>
@@ -166,7 +181,7 @@ export default function Add() {
                                     </div>}
                             </div>
                         }
-                        {questionMethods.showPlayerSearch() &&
+                        {questionMethods.showPlayerSearch() && !isDeveloper &&
                             <div className='mt-5'>
                                 <AnswerPlayerSearch disabled={loading} defaultValue={Array.isArray(questionForm.answer) ? '' : questionForm.answer} playerCallBack={(value) => questionMethods.choosePlayerMethod(value)} />
                                 {playersNumberError && <span className='text-red-500 text-xs'>{t(playersNumberError)}</span>}
