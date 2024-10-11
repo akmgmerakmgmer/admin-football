@@ -13,11 +13,10 @@ import axiosInstance from '../../../utilities/axiosInstance'
 export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
-    const advertisePages = ['gamePage', 'websitePages', 'bestOffers']
-    const priorities = [1, 2, 3, 4]
+    const advertisePages = ['websitePages', 'bestOffers', 'videoAds']
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [advertismentForm, setAdvertismentForm] = useState({ image: '', company: '', advertiseAt: 'gamePage', priority: 1, status: 'active', directionLink: '', headline: { en: "", ar: "" }, description: { en: "", ar: "" } })
+    const [advertismentForm, setAdvertismentForm] = useState({ image: '', video: '', company: '', advertiseAt: 'websitePages', priority: 1, status: 'active', directionLink: '', headline: { en: "", ar: "" }, description: { en: "", ar: "" } })
     const [errorData, setErrorData] = useState({ company: '', advertiseAt: '', directionLink: '', image: '', 'headline.en': '', 'headline.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
@@ -89,6 +88,17 @@ export default function AddAndEdit() {
                             {advertismentForm.image && <div className='relative'>
                                 <img src={advertismentForm.image} className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} />
                                 <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setAdvertismentForm({ ...advertismentForm, image: '' })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
+                        <div className='mt-5'>
+                            <UploadImage imageError={errorData.image} imageUploaded={(value: any) => setAdvertismentForm({ ...advertismentForm, video: value })} imageNotUploaded={(error: any) => setImageError(error)} />
+                            {advertismentForm.video && <div className='relative'>
+                                <video className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} controls loop muted>
+                                    <source src={advertismentForm.video} type="video/mp4"></source>
+                                </video>
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setAdvertismentForm({ ...advertismentForm, video: '' })}>
                                     <Delete color='error' />
                                 </div>
                             </div>}
