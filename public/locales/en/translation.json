@@ -220,6 +220,7 @@
   "city": "City",
   "notes": "Notes",
   "compeletePurchase": "Compelete Purchase",
+  "purchases": "Purchases",
   "userData": "User Information",
   "paymentMethod": "Payment Method",
   "cashOnDelivery": "Cash on delivery",

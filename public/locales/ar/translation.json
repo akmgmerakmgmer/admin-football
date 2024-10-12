@@ -157,6 +157,7 @@
   "city": "المدينة",
   "notes": "ملاحظات",
   "compeletePurchase": "اتمام عملية الشراء",
+  "purchases": "عدد مرات الشراء",
   "userData": "البيانات الشخصية",
   "paymentMethod": "طريقة الدفع",
   "cashOnDelivery": "الدفع عند الاستلام",

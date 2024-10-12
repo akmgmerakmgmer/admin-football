@@ -14,7 +14,7 @@ export default function MainAvatars() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("image"), t('price')]
+    const tableHeads = [t("image"), t('price'),t('purchases')]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     const nameSearch = useRef('')
     useEffect(() => {
