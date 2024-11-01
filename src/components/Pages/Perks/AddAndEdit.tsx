@@ -21,7 +21,7 @@ export default function AddAndEdit() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getQuestionDetails()
+        getPerkDetails()
     }, [])
 
     const addPerk = () => {
@@ -38,7 +38,7 @@ export default function AddAndEdit() {
         })
     }
 
-    const getQuestionDetails = () => {
+    const getPerkDetails = () => {
         setPageLoading(true)
         if (id) {
             axiosInstance.get(`perks/${id}`).then((response: any) => {

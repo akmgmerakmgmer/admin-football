@@ -9,6 +9,7 @@ type SinglePlayerProps = {
     value: {
         _id: string,
         firstName: string,
+        fullName: string,
         nameEn: string,
         nameAr: string,
         image: string,
@@ -24,6 +25,11 @@ export default function SingleUser(props: SinglePlayerProps) {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
                     <div className="font-medium text-gray-900">{props.value.firstName}</div>
+                </div>
+            </td>
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
+                <div>
+                    <div className="font-medium text-gray-900">{props.value.fullName}</div>
                 </div>
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">

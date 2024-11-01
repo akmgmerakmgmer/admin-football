@@ -40,7 +40,7 @@ export default function AddAndEdit() {
             setPageLoading(true)
             await getPerks()
             await getAvatars()
-            getQuestionDetails()
+            getShopItemDetails()
         }
     }
 
@@ -58,7 +58,7 @@ export default function AddAndEdit() {
         })
     }
 
-    const getQuestionDetails = () => {
+    const getShopItemDetails = () => {
         setPageLoading(true)
         if (id) {
             axiosInstance.get(`shopItems/${id}`).then((response: any) => {

@@ -35,6 +35,8 @@ const ShopItems = lazy(() => import('./pages/ShopItems/ShopItems'));
 const AddAndEditShopItems = lazy(() => import('./pages/ShopItems/AddAndEditShopItems'));
 const Perks = lazy(() => import('./pages/Perks/Perks'));
 const AddAndEditPerks = lazy(() => import('./pages/Perks/AddAndEditPerks'));
+const Events = lazy(() => import('./pages/Events/Events'));
+const AddAndEditEvents = lazy(() => import('./pages/Events/AddAndEditEvents'));
 const Transactions = lazy(() => import('./pages/Transactions/Transactions'));
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
@@ -126,6 +128,9 @@ function App() {
                           <Route path='/perks' element={<Perks />} />
                           <Route path='/add-perk' element={<AddAndEditPerks />} />
                           <Route path='/edit-perk/:id' element={<AddAndEditPerks />} />
+                          <Route path='/events' element={<Events />} />
+                          <Route path='/add-event' element={<AddAndEditEvents />} />
+                          <Route path='/edit-event/:id' element={<AddAndEditEvents />} />
                           <Route path='/transactions' element={<Transactions />} />
                           <Route path='/login' element={<Login />} />
                           {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}

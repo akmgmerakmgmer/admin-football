@@ -52,7 +52,24 @@ export default function useQuestions(props: any) {
                 setLoading(true)
                 const payload = JSON.parse(developerQuestions.current);
                 for (let i in payload) {
-                    if (payload[i].answer == 'true' || payload[i].answer == 'false') {
+                    if (payload[i].hints?.length) {
+                        payload[i]['questionMode'] = payload[i].hints[0].en.split(' ').length === 1 ? 'passwordChallenge' : 'guessThePlayer'
+                        payload[i].question = {}
+                        if (payload[i].hints[0].en.split(' ').length === 1) {
+                            payload[i].question.en = 'Password Challenge'
+                            payload[i].question.ar = 'كلمة السر'
+                        } else {
+                            payload[i].question.en = 'Guess The Player'
+                            payload[i].question.ar = 'خمن اللاعب'
+                        }
+                    }
+                    else if (payload[i].answer.en && payload[i].answer.ar) {
+                        payload[i].question = {}
+                        payload[i].question.en = 'Reversed Words'
+                        payload[i].question.ar = 'الكلمات المعكوسة'
+                        payload[i]['questionMode'] = 'reversedWords'
+                    }
+                    else if (payload[i].answer == 'true' || payload[i].answer == 'false') {
                         payload[i]['questionMode'] = 'trueOrFalse'
                     } else {
                         payload[i]['questionMode'] = 'multipleChoices'
@@ -61,27 +78,27 @@ export default function useQuestions(props: any) {
                     payload[i]['difficulty'] = questionForm.difficulty || 'medium'
                 }
                 return axiosInstance.post('questions', payload).then(response => {
-                }).catch(err=>{
+                }).catch(err => {
                     setDeveloperError(err.response.data.message)
                 }).finally(() => {
                     setLoading(false)
                 })
             }
-
             if (questionForm.questionMode === 'multipleChoices') {
                 for (let i in choicesRef.current) {
                     if (choicesRef.current[i].en.trim() === '' || choicesRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_choices' })
                 }
             }
             if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') {
+                questionForm.answer = questionForm.answer.nameEn
                 for (let i in hintsRef.current) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }
             }
-            if ((questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') && hints.length > 5) return setPlayersNumberError('maximum_hints')
             if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
             if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)
+
             axiosInstance.post('questions', { ...questionForm, choices: choicesRef.current, hints: hintsRef.current }).then(response => {
                 navigate('/questions')
             }).catch(err => {
@@ -102,11 +119,11 @@ export default function useQuestions(props: any) {
                 }
             }
             if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer') {
+                questionForm.answer = questionForm.answer.nameEn
                 for (let i in hintsRef.current) {
                     if (hintsRef.current[i].en.trim() === '' || hintsRef.current[i].ar.trim() === '') return setErrorData({ ...errorData, questionMode: 'missing_hints' })
                 }
             }
-            if (questionForm.questionMode === 'passwordChallenge' || questionForm.questionMode === 'guessThePlayer' && hints.length > 5) return setPlayersNumberError('maximum_hints')
             if (questionForm.questionMode === 'guessTheTeam' && !questionForm.teamImage) return setImageError('field_required')
             if (questionForm.questionMode === 'guessTheTeam' && questionForm.answer.length !== 11) return setPlayersNumberError('team_not_compelete')
             setLoading(true)

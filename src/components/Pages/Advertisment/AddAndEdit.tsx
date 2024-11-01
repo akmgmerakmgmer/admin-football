@@ -23,7 +23,7 @@ export default function AddAndEdit() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getQuestionDetails()
+        getAdDetails()
     }, [])
 
     const addAdvertisment = () => {
@@ -40,7 +40,7 @@ export default function AddAndEdit() {
         })
     }
 
-    const getQuestionDetails = () => {
+    const getAdDetails = () => {
         setPageLoading(true)
         if (id) {
             axiosInstance.get(`advertisments/${id}`).then((response: any) => {

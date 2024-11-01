@@ -11,7 +11,7 @@ type SingleQuestionProps = {
             ar: string
         },
         questionMode: string,
-        answer: string
+        answer: any
     },
     deleteFunc: (id: string) => void,
     enableFunc: (id: string) => void
@@ -33,7 +33,7 @@ export default function SingleQuestion(props: SingleQuestionProps) {
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
-                    <div className="font-medium text-gray-900">{typeof (props.value.answer) === 'string' ? t(props.value.answer) : 'Multiple Answers'}</div>
+                    <div className="font-medium text-gray-900">{typeof (props.value.answer) === 'string' ? (props.value.questionMode === 'passwordChallenge' || props.value.questionMode === 'guessThePlayer') ? props.value.answer : t(props.value.answer) : props.value.questionMode === 'reversedWords' ? props.value.answer.ar : 'Multiple Answers'}</div>
                 </div>
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">

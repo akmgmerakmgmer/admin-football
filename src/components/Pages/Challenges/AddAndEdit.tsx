@@ -22,7 +22,7 @@ export default function AddAndEdit() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getQuestionDetails()
+        getChallengeDetails()
     }, [])
 
     const addChallenge = () => {
@@ -36,7 +36,7 @@ export default function AddAndEdit() {
         })
     }
 
-    const getQuestionDetails = () => {
+    const getChallengeDetails = () => {
         setPageLoading(true)
         if (id) {
             axiosInstance.get(`challenges/${id}`).then((response: any) => {

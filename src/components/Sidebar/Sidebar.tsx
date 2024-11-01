@@ -18,6 +18,7 @@ import { DynamicForm, ShoppingCart } from '@mui/icons-material';
 import FaceIcon from '@mui/icons-material/Face';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import StairsIcon from '@mui/icons-material/Stairs';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 type SidebarProps = {
     closeDrawer: () => void,
@@ -55,6 +56,11 @@ export default function Sidebar(props: SidebarProps) {
             name: 'challenges',
             route: '/challenges',
             icon: <DynamicForm />
+        },
+        {
+            name: 'events',
+            route: `/events`,
+            icon: <EmojiEventsIcon />
         },
         {
             name: 'advertisments',
