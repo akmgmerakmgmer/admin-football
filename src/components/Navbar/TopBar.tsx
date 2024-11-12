@@ -41,7 +41,7 @@ export default function TopBar() {
     const getInitialData = async () => {
         if (token) {
             await axiosInstance.post('current-user', { data: { 'token': token } }).then(async response => {
-                dispatch(fetchUserDone(response.data))
+                dispatch(fetchUserDone(response.data.user))
             }).finally(() => {
                 setLoading(false)
             })

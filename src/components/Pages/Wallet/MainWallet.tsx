@@ -62,7 +62,7 @@ export default function MainWallet() {
         setLoading(true)
         const token = localStorage.getItem('token')
         axiosInstance.post('current-user', { data: { 'token': token } }).then(response => {
-            setUser(response.data)
+            setUser(response.data.user)
             setLoading(false)
         }).catch(err => {
             setLoading(false)

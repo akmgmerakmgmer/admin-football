@@ -54,7 +54,7 @@ export default function useSignup(props: any) {
             axiosInstance.post('signup', userData).then((res: any) => {
                 localStorage.setItem('token', res.data.accessToken)
                 axiosInstance.post('current-user', { data: { 'token': res.data.accessToken } }).then((response: any) => {
-                    dispatch(fetchUserDone(response.data))
+                    dispatch(fetchUserDone(response.data.user))
                     userId.current = response.data._id
                     setShowVerification(true)
                 }).finally(() => {

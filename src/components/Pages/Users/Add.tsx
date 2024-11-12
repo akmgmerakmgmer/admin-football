@@ -35,7 +35,7 @@ export default function Add() {
         setLoading(true)
         axiosInstance.post('signup', userData).then(res => {
             axiosInstance.post('current-user', { data: { 'token': res.data.accessToken } }).then(response => {
-                dispatch(fetchUserDone(response.data))
+                dispatch(fetchUserDone(response.data.user))
             }).finally(() => {
                 setLoading(false)
                 navigate('/')

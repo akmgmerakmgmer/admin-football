@@ -30,7 +30,7 @@ const Login = () => {
             setErrorData({ email: '', password: '' })
             localStorage.setItem('token', res.data.accessToken)
             axiosInstance.post('current-user', { data: { 'token': res.data.accessToken } }).then(response => {
-                dispatch(fetchUserDone(response.data))
+                dispatch(fetchUserDone(response.data.user))
                 navigate('/users')
             })
         }).catch(err => {
