@@ -16,11 +16,11 @@ export default function AddAndEdit() {
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [eventForm, setEventForm] = useState<any>({ image: '', eventName: { en: "", ar: "" }, sides: [], prizes: [], endDate: '' })
+    const [eventForm, setEventForm] = useState<any>({ image: '', eventName: { en: "", ar: "" }, sides: [], prizes: [], endDate: '', price: 0 })
     const [prizes, setPrizes] = useState([{ prizeType: '', coins: 0, avatar: '' }])
     const prizeTypes = ['coins', 'avatar']
     const [eventSides, setEventSides] = useState([{ nameEn: '', nameAr: "" }, { nameEn: '', nameAr: "" }])
-    const [errorData, setErrorData] = useState({ image: '', 'eventName.en': '', 'eventName.ar': '' })
+    const [errorData, setErrorData] = useState({ image: '', 'eventName.en': '', 'eventName.ar': '', price: '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
     const [rerender, setRerender] = useState(false)
@@ -172,7 +172,10 @@ export default function AddAndEdit() {
                             ))}
                         </div>
                         <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-md h-full mt-1.5" onClick={addPrize}>{t('addPrize')}</button>
-                        <div className='border-gray-300 border rounded-md p-3 w-full mt-3'>
+                        <div className='flex gap-3 items-center mt-3'>
+                            <Input required value={eventForm.price} label={t('price')} inputValue={(value: number) => setEventForm({ ...eventForm, price: value })} width="w-full" disabled={loading} errorMessage={t(errorData.price)} />
+                        </div>
+                        <div className='border-gray-300 border rounded-md p-3 w-full'>
                             <input value={eventForm.endDate || ''} className='outline-none focus:border-none w-full' type="date" id="endDate" name="endDate" onChange={(e) => setEventForm({ ...eventForm, endDate: e.target.value })}></input>
                         </div>
 
