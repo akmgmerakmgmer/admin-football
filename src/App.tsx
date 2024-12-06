@@ -31,6 +31,8 @@ const Challenges = lazy(() => import('./pages/Challenges/Challenges'));
 const AddAndEditChallenge = lazy(() => import('./pages/Challenges/AddAndEditChallenge'));
 const Avatars = lazy(() => import('./pages/Avatars/Avatars'));
 const AddAndEditAvatars = lazy(() => import('./pages/Avatars/AddAndEditAvatars'));
+const Themes = lazy(() => import('./pages/Themes/Themes'));
+const AddAndEditThemes = lazy(() => import('./pages/Themes/AddAndEditThemes'));
 const ShopItems = lazy(() => import('./pages/ShopItems/ShopItems'));
 const AddAndEditShopItems = lazy(() => import('./pages/ShopItems/AddAndEditShopItems'));
 const Perks = lazy(() => import('./pages/Perks/Perks'));
@@ -122,6 +124,9 @@ function App() {
                           <Route path='/avatars' element={<Avatars />} />
                           <Route path='/add-avatar' element={<AddAndEditAvatars />} />
                           <Route path='/edit-avatar/:id' element={<AddAndEditAvatars />} />
+                          <Route path='/themes' element={<Themes />} />
+                          <Route path='/add-theme' element={<AddAndEditThemes />} />
+                          <Route path='/edit-theme/:id' element={<AddAndEditThemes />} />
                           <Route path='/shop-items' element={<ShopItems />} />
                           <Route path='/add-shop-item' element={<AddAndEditShopItems />} />
                           <Route path='/edit-shop-item/:id' element={<AddAndEditShopItems />} />
