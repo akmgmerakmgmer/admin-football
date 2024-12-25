@@ -37,6 +37,8 @@ const ShopItems = lazy(() => import('./pages/ShopItems/ShopItems'));
 const AddAndEditShopItems = lazy(() => import('./pages/ShopItems/AddAndEditShopItems'));
 const Perks = lazy(() => import('./pages/Perks/Perks'));
 const AddAndEditPerks = lazy(() => import('./pages/Perks/AddAndEditPerks'));
+const Ranks = lazy(() => import('./pages/Ranks/Ranks'));
+const AddAndEditRanks = lazy(() => import('./pages/Ranks/AddAndEditRanks'));
 const Events = lazy(() => import('./pages/Events/Events'));
 const AddAndEditEvents = lazy(() => import('./pages/Events/AddAndEditEvents'));
 const Transactions = lazy(() => import('./pages/Transactions/Transactions'));
@@ -133,6 +135,9 @@ function App() {
                           <Route path='/perks' element={<Perks />} />
                           <Route path='/add-perk' element={<AddAndEditPerks />} />
                           <Route path='/edit-perk/:id' element={<AddAndEditPerks />} />
+                          <Route path='/ranks' element={<Ranks />} />
+                          <Route path='/add-rank' element={<AddAndEditRanks />} />
+                          <Route path='/edit-rank/:id' element={<AddAndEditRanks />} />
                           <Route path='/events' element={<Events />} />
                           <Route path='/add-event' element={<AddAndEditEvents />} />
                           <Route path='/edit-event/:id' element={<AddAndEditEvents />} />

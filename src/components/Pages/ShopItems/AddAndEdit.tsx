@@ -180,7 +180,6 @@ export default function AddAndEdit() {
                                 <DynamicSelect label={t('addAvatar')} items={avatars} selectCallback={(value: any) => {
                                     shopItemForm.avatars[index] = value.image
                                     setShopItemForm({ ...shopItemForm })
-                                    console.log(shopItemForm)
                                 }} />
                             </div>
                         )) : <div></div>}

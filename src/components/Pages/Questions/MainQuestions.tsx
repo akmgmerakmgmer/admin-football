@@ -17,7 +17,7 @@ export default function MainQuestions() {
     const [itemsPerPage, setItemsPerPage] = useState(1)
     const tableHeads = [t("questionEn"), t("questionAr"), t('answer'), t('questionMode'),]
     const [checkBoxItems, setCheckBoxItems] = useState([])
-    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge', 'guessThePlayer', 'reversedWords']
+    const questionModes = ['multipleChoices', 'trueOrFalse', 'passwordChallenge', 'guessThePlayer', 'reversedWords', 'guessTheTeam']
     const questionSearch = useRef('')
     const questionMode = useRef('')
     const answer = useRef('')

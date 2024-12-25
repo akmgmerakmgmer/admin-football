@@ -14,7 +14,7 @@ import { fetchUserDone } from '../../redux/user';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import QuizIcon from '@mui/icons-material/Quiz';
 import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
-import { Contrast, DynamicForm, ShoppingCart } from '@mui/icons-material';
+import { Contrast, DynamicForm, MilitaryTech, ShoppingCart } from '@mui/icons-material';
 import FaceIcon from '@mui/icons-material/Face';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import StairsIcon from '@mui/icons-material/Stairs';
@@ -61,6 +61,11 @@ export default function Sidebar(props: SidebarProps) {
             name: 'events',
             route: `/events`,
             icon: <EmojiEventsIcon />
+        },
+        {
+            name: 'ranks',
+            route: `/ranks`,
+            icon: <MilitaryTech />
         },
         {
             name: 'advertisments',

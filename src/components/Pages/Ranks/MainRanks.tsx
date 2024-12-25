@@ -2,29 +2,28 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pagination } from '@mui/material'
 import Table from '../../GeneralComponents/Table'
-import SinglePerk from './SinglePerk'
+import SingleRank from './SingleRank'
 import EmptyProduct from '../Cart/EmptyProduct'
-import Input from '../../TextFields/Input'
 import axiosInstance from '../../../utilities/axiosInstance'
 
-export default function MainPerk() {
+export default function MainRank() {
     const { t } = useTranslation()
     const [loading, setLoading] = useState(true)
-    const [perks, setPerks] = useState([])
+    const [ranks, setRanks] = useState([])
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("image"), t("englishName"), t('arabicName'), t('price')]
+    const tableHeads = [t("image"), t("englishName"), t('arabicName'), t('numberOfPlayers')]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     useEffect(() => {
-        getPerks()
+        getRanks()
     }, [])
 
-    const getPerks = () => {
+    const getRanks = () => {
         setLoading(true)
-        axiosInstance.get(`admin-perks?page=${pageNumber.current}`).then(response => {
-            setPerks(response.data.perks)
-            setTotalItems(response.data.total_perks)
+        axiosInstance.get(`admin-ranks?page=${pageNumber.current}`).then(response => {
+            setRanks(response.data.ranks)
+            setTotalItems(response.data.total_ranks)
             setItemsPerPage(response.data.per_page)
         }).finally(() => {
             setLoading(false)
@@ -32,33 +31,33 @@ export default function MainPerk() {
         })
     }
 
-    const deletePerk = (id: string) => {
+    const deleteRank = (id: string) => {
         setLoading(true)
-        axiosInstance.delete(`/perks/${id}`).then(response => {
-            getPerks()
+        axiosInstance.delete(`/ranks/${id}`).then(response => {
+            getRanks()
         })
     }
 
     const changePageNumber = (event: React.ChangeEvent<unknown>, value: number) => {
         window.scroll(0, 0)
         pageNumber.current = value;
-        getPerks()
+        getRanks()
     };
     const checkAllItems = (e: any) => {
         if (e === true) {
-            setCheckBoxItems([...perks])
+            setCheckBoxItems([...ranks])
         } else {
             setCheckBoxItems([])
         }
     }
     return (
         <div>
-            {perks.length === 0 && !loading ?
-                <EmptyProduct text={t('noPerksAvailable')} />
+            {ranks.length === 0 && !loading ?
+                <EmptyProduct text={t('noRanksAvailable')} />
                 : <div className='overflow-y-hidden overflow-x-scroll'>
-                    <Table checkBoxItems={checkBoxItems} checkAll={checkAllItems} deleteUrl='perks' reloadItems={getPerks} title={t("perks")} tableHeads={tableHeads} loading={loading}>
-                        {perks.map((perk: any, index: any) => (
-                            <SinglePerk checkBoxItems={checkBoxItems} value={perk} deleteFunc={deletePerk} key={index} />
+                    <Table checkBoxItems={checkBoxItems} checkAll={checkAllItems} deleteUrl='ranks' reloadItems={getRanks} title={t("ranks")} tableHeads={tableHeads} loading={loading}>
+                        {ranks.map((rank: any, index: any) => (
+                            <SingleRank checkBoxItems={checkBoxItems} value={rank} deleteFunc={deleteRank} key={index} />
                         ))}
                     </Table>
                 </div>}

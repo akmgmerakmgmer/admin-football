@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 type DynamicSelectProps = {
     items: any,
     label: string,
+    value?: string,
     selectCallback: (value: any) => void,
 }
 export default function DynamicSelect(props: DynamicSelectProps) {
@@ -25,7 +26,7 @@ export default function DynamicSelect(props: DynamicSelectProps) {
                     onChange={(e) => {
                         props.selectCallback(e.target.value)
                     }}
-
+                    value={props.items.filter((item: any) => item._id == props.value)[0]}
                     input={<OutlinedInput id="select-multiple-chip" label={props.label} />}
                     renderValue={(selected: any) => {
                         return (
@@ -42,7 +43,7 @@ export default function DynamicSelect(props: DynamicSelectProps) {
                             value={item}
                         >
                             <div className='flex gap-1 items-center'>
-                                 <img src={item.image} className='object-cover w-11 rounded-full' />
+                                <img src={item.image} className='object-cover w-11 rounded-full' />
                                 {item.title && <span>{i18n.language === 'ar' ? item.title.ar : item.title.en}</span>}
                             </div>
                         </MenuItem>
