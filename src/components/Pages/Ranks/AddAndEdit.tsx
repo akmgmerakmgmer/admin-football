@@ -16,9 +16,9 @@ export default function AddAndEdit() {
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [rankForm, setRankForm] = useState({ image: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', wins_to_promote: 0, loses_to_demote: 0 })
+    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', wins_to_promote: 0, loses_to_demote: 0 })
     const [ranks, setRanks] = useState([])
-    const [errorData, setErrorData] = useState({ image: '', 'title.en': '', 'title.ar': '' })
+    const [errorData, setErrorData] = useState({ bgImage: '', image: '', 'title.en': '', 'title.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
     const navigate = useNavigate()
@@ -93,6 +93,16 @@ export default function AddAndEdit() {
                     <h2 className='text-xl'>{id ? t("editRank") : t("addRank")}</h2>
                     <div className='flex flex-col gap-1'>
                         <div className='mt-5'>
+                            <span>{t('backgroundImage')}</span>
+                            <UploadImage imageError={errorData.bgImage} imageUploaded={(value: any) => setRankForm({ ...rankForm, bgImage: value })} imageNotUploaded={(error: any) => setImageError(error)} />
+                            {rankForm.bgImage && <div className='relative'>
+                                <img src={rankForm.bgImage} className={`w-full object-cover rounded-lg ${errorData.bgImage ? '' : 'mt-5'}`} />
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setRankForm({ ...rankForm, bgImage: '' })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
+                        <div className='mt-5'>
                             <span>{t('mainImage')}</span>
                             <UploadImage imageError={errorData.image} imageUploaded={(value: any) => setRankForm({ ...rankForm, image: value })} imageNotUploaded={(error: any) => setImageError(error)} />
                             {rankForm.image && <div className='relative'>
@@ -118,7 +128,7 @@ export default function AddAndEdit() {
                             rankForm.next_rank = value._id
                             setRankForm({ ...rankForm })
                         }} />
-                        <DynamicSelect value={rankForm.prev_rank}  label={t('prevRank')} items={ranks} selectCallback={(value: any) => {
+                        <DynamicSelect value={rankForm.prev_rank} label={t('prevRank')} items={ranks} selectCallback={(value: any) => {
                             rankForm.prev_rank = value._id
                             setRankForm({ ...rankForm })
                         }} />
