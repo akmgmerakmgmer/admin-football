@@ -392,6 +392,8 @@
   "editShopItem": "تعديل منتج في المتجر",
   "mainImage": "الصورة الرئيسية",
   "backgroundImage": "الصورة الخلفية",
+  "bannerImageEnglish": "صورة بانر انجليزي",
+  "bannerImageArabic": "صورة بانر عربي",
   "type": "النوع",
   "perk": "وسيلة مساعدة",
   "addPerk": "أضف وسيلة مساعدة",

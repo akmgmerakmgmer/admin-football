@@ -393,6 +393,8 @@
   "editShopItem": "Edit Shop Item",
   "mainImage": "Main Image",
   "backgroundImage": "Background Image",
+  "bannerImageEnglish": "Banner Image English",
+  "bannerImageArabic": "Banner Image Arabic",
   "numberOfCoins": "Number Of Coins",
   "numberOfPlayers": "Number Of Players",
   "prizes": "Prizes",

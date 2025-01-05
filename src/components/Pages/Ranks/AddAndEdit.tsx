@@ -16,9 +16,9 @@ export default function AddAndEdit() {
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', wins_to_promote: 0, loses_to_demote: 0 })
+    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', wins_to_promote: 0, loses_to_demote: 0, rank_banner: { en: "", ar: "" } })
     const [ranks, setRanks] = useState([])
-    const [errorData, setErrorData] = useState({ bgImage: '', image: '', 'title.en': '', 'title.ar': '' })
+    const [errorData, setErrorData] = useState({ bgImage: '', image: '', 'title.en': '', 'title.ar': '', 'rank_banner.en': '', 'rank_banner.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
     const navigate = useNavigate()
@@ -108,6 +108,26 @@ export default function AddAndEdit() {
                             {rankForm.image && <div className='relative'>
                                 <img src={rankForm.image} className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} />
                                 <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setRankForm({ ...rankForm, image: '' })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
+                        <div className='mt-5'>
+                            <span>{t('bannerImageEnglish')}</span>
+                            <UploadImage imageError={errorData.image} imageUploaded={(value: any) => setRankForm({ ...rankForm, rank_banner: { ...rankForm.rank_banner, en: value } })} imageNotUploaded={(error: any) => setImageError(error)} />
+                            {rankForm.image && <div className='relative'>
+                                <img src={rankForm.rank_banner?.en} className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} />
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setRankForm({ ...rankForm, rank_banner: { ...rankForm.rank_banner, en: '' } })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
+                        <div className='mt-5'>
+                            <span>{t('bannerImageArabic')}</span>
+                            <UploadImage imageError={errorData.image} imageUploaded={(value: any) => setRankForm({ ...rankForm, rank_banner: { ...rankForm.rank_banner, ar: value } })} imageNotUploaded={(error: any) => setImageError(error)} />
+                            {rankForm.image && <div className='relative'>
+                                <img src={rankForm.rank_banner?.ar} className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} />
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setRankForm({ ...rankForm, rank_banner: { ...rankForm.rank_banner, ar: '' } })}>
                                     <Delete color='error' />
                                 </div>
                             </div>}
