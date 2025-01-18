@@ -16,7 +16,7 @@ export default function AddAndEdit() {
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', wins_to_promote: 0, loses_to_demote: 0, rank_banner: { en: "", ar: "" } })
+    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', season_end_rank: '', wins_to_promote: 0, loses_to_demote: 0, rank_banner: { en: "", ar: "" } })
     const [ranks, setRanks] = useState([])
     const [errorData, setErrorData] = useState({ bgImage: '', image: '', 'title.en': '', 'title.ar': '', 'rank_banner.en': '', 'rank_banner.ar': '' })
     const { id } = useParams()
@@ -150,6 +150,10 @@ export default function AddAndEdit() {
                         }} />
                         <DynamicSelect value={rankForm.prev_rank} label={t('prevRank')} items={ranks} selectCallback={(value: any) => {
                             rankForm.prev_rank = value._id
+                            setRankForm({ ...rankForm })
+                        }} />
+                        <DynamicSelect value={rankForm.season_end_rank} label={t('seasonEndRank')} items={ranks} selectCallback={(value: any) => {
+                            rankForm.season_end_rank = value._id
                             setRankForm({ ...rankForm })
                         }} />
                         <Prizes loading={loading} mainForm={rankForm} />

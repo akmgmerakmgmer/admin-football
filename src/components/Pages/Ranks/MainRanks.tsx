@@ -13,7 +13,7 @@ export default function MainRank() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("image"), t("englishName"), t('arabicName'), t('numberOfPlayers')]
+    const tableHeads = [t("image"), t("englishName"), t('arabicName'), t('numberOfPlayers'), t('winsToPromote'), t('losesToDemote')]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     useEffect(() => {
         getRanks()
