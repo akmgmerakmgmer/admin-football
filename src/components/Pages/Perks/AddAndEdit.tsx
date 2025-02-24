@@ -8,13 +8,14 @@ import { Delete } from '@material-ui/icons'
 import Input from '../../TextFields/Input'
 import ButtonLoading from '../../Loadings/ButtonLoading'
 import axiosInstance from '../../../utilities/axiosInstance'
+import { Checkbox } from '@mui/material'
 
 export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [perkForm, setPerkForm] = useState({ image: '', backgroundImage: '', price: 1, title: { en: "", ar: "" }, description: { en: "", ar: "" } })
+    const [perkForm, setPerkForm] = useState({ image: '', backgroundImage: '', price: 1, title: { en: "", ar: "" }, description: { en: "", ar: "" }, applicableOnline: true })
     const [errorData, setErrorData] = useState({ image: '', backgroundImage: '', 'title.en': '', 'title.ar': '' })
     const { id } = useParams()
     const { i18n, t } = useTranslation()
@@ -115,6 +116,10 @@ export default function AddAndEdit() {
                         </div>
                         <div className='flex gap-3 items-center'>
                             <Input inputType='number' value={perkForm.price} label={t('price')} inputValue={(value: number) => setPerkForm({ ...perkForm, price: value })} width="w-full" disabled={loading} />
+                        </div>
+                        <div className='flex items-center'>
+                            <Checkbox color='primary' onChange={(e) => setPerkForm({ ...perkForm, applicableOnline: e.target.checked })} checked={perkForm.applicableOnline} />
+                            <label>{t('applicableOnline')}</label>
                         </div>
                         <button className={`w-full h-12 bg-primaryColor mt-7 text-white rounded-md`} onClick={id ? editPerk : addPerk}>
                             {loading ? <ButtonLoading loading={loading} /> : <span>{id ? t('editPerk') : t('addPerk')}</span>}
