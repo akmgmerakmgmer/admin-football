@@ -13,7 +13,7 @@ export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const [imageError, setImageError] = useState('')
-    const [avatarForm, setAvatarForm] = useState({ image: '', price: null })
+    const [avatarForm, setAvatarForm] = useState({ image: '', price: null, video: '' })
     const [errorData, setErrorData] = useState({ image: '', price: '' })
     const { id } = useParams()
     const { t } = useTranslation()
@@ -76,6 +76,15 @@ export default function AddAndEdit() {
                             {avatarForm.image && <div className='relative'>
                                 <img src={avatarForm.image} className={`w-full object-cover rounded-lg ${errorData.image ? '' : 'mt-5'}`} />
                                 <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setAvatarForm({ ...avatarForm, image: '' })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
+                        <div>
+                            <UploadImage imageUploaded={(value: any) => setAvatarForm({ ...avatarForm, video: value })} />
+                            {avatarForm.video && <div className='relative'>
+                                <video src={avatarForm.video} autoPlay className={`w-full object-cover rounded-lg`} />
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setAvatarForm({ ...avatarForm, video: '' })}>
                                     <Delete color='error' />
                                 </div>
                             </div>}
