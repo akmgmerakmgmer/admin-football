@@ -11,13 +11,14 @@ type SingleQuestionProps = {
             ar: string
         },
         questionMode: string,
-        answer: any
+        answer: any,
+        hints: any
     },
     deleteFunc: (id: string) => void,
     enableFunc: (id: string) => void
 }
 export default function SingleQuestion(props: SingleQuestionProps) {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     return (
         <tr>
             <SingleCheckboxes checkBoxItems={props.checkBoxItems} value={props.value} />
@@ -35,6 +36,13 @@ export default function SingleQuestion(props: SingleQuestionProps) {
                 <div>
                     <div className="font-medium text-gray-900">{typeof (props.value.answer) === 'string' ? (props.value.questionMode === 'passwordChallenge' || props.value.questionMode === 'guessThePlayer') ? props.value.answer : t(props.value.answer) : props.value.questionMode === 'reversedWords' ? props.value.answer.ar : 'Multiple Answers'}</div>
                 </div>
+            </td>
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
+                {props.value.hints.length ? <div className='flex flex-col gap-0.5'>
+                    {props.value.hints.map((hint: any) => (
+                        <span>{i18n.language == 'en' ? hint.en : hint.ar}</span>
+                    ))}
+                </div> : <span>{t('noHints')}</span>}
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>

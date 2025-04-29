@@ -18,7 +18,6 @@ type SingleShopItemProps = {
     deleteFunc: (id: string) => void,
 }
 export default function SingleShopItem(props: SingleShopItemProps) {
-    const { t } = useTranslation()
     return (
         <tr>
             <SingleCheckboxes checkBoxItems={props.checkBoxItems} value={props.value} />

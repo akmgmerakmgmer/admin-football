@@ -396,6 +396,8 @@
   "bannerImageArabic": "صورة بانر عربي",
   "seasonEndRank": "تصنيف نهاية الموسم",
   "applicableOnline": "تعمل في طور الاونلاين",
+  "hints": "التلميحات",
+  "noHints": "لا توجد تلميحات",
   "type": "النوع",
   "perk": "وسيلة مساعدة",
   "addPerk": "أضف وسيلة مساعدة",
