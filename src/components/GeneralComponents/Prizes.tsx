@@ -29,8 +29,8 @@ export default function Prizes(props: { loading: boolean, mainForm: any }) {
         setPrizes(updatedPrizes)
     }
     return (
-        <div className='w-full'>
-            <span className='mt-5 -mb-4'>{t('prizes')}</span>
+        <div className='w-full mt-4'>
+            <span>{t('prizes')}</span>
             <div className='flex flex-col items-start gap-1'>
                 {prizes.map((prize: any, index: any) => (
                     <div key={index} className='flex flex-col w-full'>
@@ -87,7 +87,9 @@ export default function Prizes(props: { loading: boolean, mainForm: any }) {
                         </div>}
                     </div>
                 ))}
-                <Button variant="contained" color='primary' endIcon={<AddIcon color='inherit' />} onClick={addPrize}>{t('addPrize')}</Button>
+                <div className="mt-5">
+                    <Button variant="contained" color='primary' endIcon={<AddIcon color='inherit' />} onClick={addPrize}>{t('addPrize')}</Button>
+                </div>
             </div>
         </div>
     )

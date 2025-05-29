@@ -169,6 +169,8 @@
   "missing_hints": "Please fill at least one hint",
   "maximum_hints": "You have a maximum of 5 hints",
   "questionMode": "Question Type",
+  "isSinglePlayer": "is Single Player?",
+  "isMultiplayer": "is Multiplayer?",
   "mode": "Question Tournament",
   "translateToEnglish": "Translate to English",
   "translateToArabic": "Translate to Arabic",

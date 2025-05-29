@@ -9,15 +9,16 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Input from '../../TextFields/Input'
 import ButtonLoading from '../../Loadings/ButtonLoading'
 import axiosInstance from '../../../utilities/axiosInstance'
-import SelectedComponent from '../../GeneralComponents/SelectComponent'
+import Checkbox from '@mui/material/Checkbox';
 import Prizes from '../../GeneralComponents/Prizes'
+import { FormControlLabel } from '@material-ui/core'
 
 export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [eventForm, setEventForm] = useState<any>({ image: '', eventName: { en: "", ar: "" }, sides: [], prizes: [], endDate: '', price: 0 })
+    const [eventForm, setEventForm] = useState<any>({ image: '', eventName: { en: "", ar: "" }, description: { en: "", ar: "" }, gameBackground: '', active: true, isSinglePlayer: false, isMultiplayer: false, sides: [], prizes: [], endDate: '', price: 0 })
     const [eventSides, setEventSides] = useState([{ nameEn: '', nameAr: "" }, { nameEn: '', nameAr: "" }])
     const [errorData, setErrorData] = useState({ image: '', 'eventName.en': '', 'eventName.ar': '', price: '' })
     const { id } = useParams()
@@ -108,14 +109,30 @@ export default function AddAndEdit() {
                                 </div>
                             </div>}
                         </div>
+                        <div className='mt-5'>
+                            <span>{t('backgroundImage')}</span>
+                            <UploadImage imageUploaded={(value: any) => setEventForm({ ...eventForm, gameBackground: value })} imageNotUploaded={(error: any) => setImageError(error)} />
+                            {eventForm.gameBackground && <div className='relative'>
+                                <img src={eventForm.gameBackground} className={`w-full object-cover rounded-lg`} />
+                                <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setEventForm({ ...eventForm, gameBackground: '' })}>
+                                    <Delete color='error' />
+                                </div>
+                            </div>}
+                        </div>
                         <div className='flex gap-3 items-center'>
                             <Input required value={eventForm.eventName.en} label={t('nameEn')} inputValue={(value: string) => setEventForm({ ...eventForm, eventName: { ...eventForm.eventName, en: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['eventName.en'])} />
                         </div>
                         <div className='flex gap-3 items-center'>
                             <Input required value={eventForm.eventName.ar} label={t('nameAr')} inputValue={(value: string) => setEventForm({ ...eventForm, eventName: { ...eventForm.eventName, ar: value } })} width="w-full" disabled={loading} errorMessage={t(errorData['eventName.ar'])} />
                         </div>
-                        <span className='mt-5 -mb-4'>{t('sides')}</span>
-                        <div className='flex flex-col items-center gap-1'>
+                        <div className='flex gap-3 items-center'>
+                            <Input textarea required value={eventForm.description.en} label={t('descriptionEn')} inputValue={(value: string) => setEventForm({ ...eventForm, description: { ...eventForm.description, en: value } })} width="w-full" disabled={loading} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input textarea required value={eventForm.description.ar} label={t('descriptionAr')} inputValue={(value: string) => setEventForm({ ...eventForm, description: { ...eventForm.description, ar: value } })} width="w-full" disabled={loading} />
+                        </div>
+                        {!eventForm.isSinglePlayer && !eventForm.isMultiplayer && <div className='flex flex-col'>
+                            <span className='mt-5 -mb-4'>{t('sides')}</span>
                             {eventSides.map((side: any, index: any) => (
                                 <div className='flex items-center gap-3 w-full'>
                                     <Input required value={side.nameEn || ''} label={t('nameEn')} inputValue={(value: string) => eventSides[index].nameEn = value} width="w-full" disabled={loading} />
@@ -125,19 +142,28 @@ export default function AddAndEdit() {
                                     </div> : <DoneAllIcon color='success' />}
                                 </div>
                             ))}
+                            <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-md h-full mt-3 shadow-md" onClick={addSide}>{t('addSide')}</button>
+                        </div>}
+                        <div className='self-start'>
+                            <FormControlLabel control={<Checkbox checked={eventForm.isSinglePlayer} onChange={(e: any) => setEventForm({ ...eventForm, isSinglePlayer: e.target.checked })} />} label={t('isSinglePlayer')} />
                         </div>
-                        <button className="bg-primaryColor px-5 py-2.5 text-white text-sm rounded-md h-full mt-1.5" onClick={addSide}>{t('addSide')}</button>
+                        <div className='self-start'>
+                            <FormControlLabel control={<Checkbox checked={eventForm.isMultiplayer} onChange={(e: any) => setEventForm({ ...eventForm, isMultiplayer: e.target.checked })} />} label={t('isMultiplayer')} />
+                        </div>
                         <Prizes loading={loading} mainForm={eventForm} />
                         <div className='flex gap-3 items-center mt-3'>
                             <Input required value={eventForm.price} label={t('price')} inputValue={(value: number) => setEventForm({ ...eventForm, price: value })} width="w-full" disabled={loading} errorMessage={t(errorData.price)} />
                         </div>
-                        <div className='border-gray-300 border rounded-md p-3 w-full'>
+                        <div className='border-gray-300 border rounded-md p-3 w-full mt-3'>
                             <input value={eventForm.endDate || ''} className='outline-none focus:border-none w-full' type="date" id="endDate" name="endDate" onChange={(e) => setEventForm({ ...eventForm, endDate: e.target.value })}></input>
                         </div>
 
-                        <button className={`w-full h-12 bg-primaryColor mt-7 text-white rounded-md`} onClick={id ? editEvent : addEvent}>
+                        <button className={`w-full h-12 bg-primaryColor mt-7 text-white rounded-md shadow-md`} onClick={id ? editEvent : addEvent}>
                             {loading ? <ButtonLoading loading={loading} /> : <span>{id ? t('editEvent') : t('addEvent')}</span>}
                         </button>
+                        <div className='self-start'>
+                            <FormControlLabel control={<Checkbox checked={eventForm.active} onChange={(e: any) => setEventForm({ ...eventForm, active: e.target.checked })} />} label={t('active')} />
+                        </div>
                         <span className='text-red-500 text-xs mt-1 block'>{i18n.language == 'en' ? generalError.en : generalError.ar}</span>
                     </div>
                 </div>

@@ -396,6 +396,8 @@
   "bannerImageArabic": "صورة بانر عربي",
   "seasonEndRank": "تصنيف نهاية الموسم",
   "applicableOnline": "تعمل في طور الاونلاين",
+  "isSinglePlayer": "هل هي طور لاعب واحد؟",
+  "isMultiplayer": "هل هي طور متعدد اللاعبين؟",
   "hints": "التلميحات",
   "noHints": "لا توجد تلميحات",
   "type": "النوع",
