@@ -113,7 +113,7 @@ export default function AddAndEdit() {
                             <span>{t('backgroundImage')}</span>
                             <UploadImage imageUploaded={(value: any) => setEventForm({ ...eventForm, gameBackground: value })} imageNotUploaded={(error: any) => setImageError(error)} />
                             {eventForm.gameBackground && <div className='relative'>
-                                <img src={eventForm.gameBackground} className={`w-full object-cover rounded-lg`} />
+                                <img src={eventForm.gameBackground} className={`w-full object-cover rounded-lg mt-5`} />
                                 <div className='absolute top-5 ltr:right-5 rtl:left-5 cursor-pointer' onClick={() => setEventForm({ ...eventForm, gameBackground: '' })}>
                                     <Delete color='error' />
                                 </div>
