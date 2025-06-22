@@ -14,7 +14,7 @@ export default function MainUsers() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("username"), t("number"), t('role'), t("gamesPlayed"), t('coins'), t('status'), t("datePlaced")]
+    const tableHeads = [t("username"), t("number"), t('role'), t("gamesPlayed"),t('eventsGamesPlayed'), t('coins'), t('status'), t("datePlaced")]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     const usernameSearch = useRef('')
     const numberSearch = useRef('')

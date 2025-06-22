@@ -279,6 +279,7 @@
   "priority": "الأولوية",
   "invalid_link_format": "الرابط غير صحيح",
   "gamesPlayed": "عدد مرات اللعب",
+  "eventsGamesPlayed": "عدد مرات اللعب في التحديات",
   "players": "اللاعبين",
   "editPlayer": "تعديل اللاعب",
   "noPlayersAvailable": "لا يوجد لاعبين",
