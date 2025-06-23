@@ -152,6 +152,7 @@
   "link": "Redirect Link",
   "gamesPlayed": "Games Played",
   "eventsGamesPlayed":"Events Games Played",
+  "onlineGamesPlayed": "Online Games Played",
   "invalid_link_format": "Invalid Link Format",
   "players": "Players",
   "noPlayersAvailable": "No Players Available",
