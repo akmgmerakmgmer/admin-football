@@ -4,7 +4,6 @@ import { Pagination } from '@mui/material'
 import Table from '../../GeneralComponents/Table'
 import SingleEvent from './SingleEvent'
 import EmptyProduct from '../Cart/EmptyProduct'
-import Input from '../../TextFields/Input'
 import axiosInstance from '../../../utilities/axiosInstance'
 
 export default function MainEvents() {
@@ -14,7 +13,7 @@ export default function MainEvents() {
     const pageNumber = useRef(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(1)
-    const tableHeads = [t("englishName"), t('arabicName'), t('endDate')]
+    const tableHeads = [t("englishName"), t('arabicName'), t('players'), t('endDate')]
     const [checkBoxItems, setCheckBoxItems] = useState([])
     useEffect(() => {
         getEvents()

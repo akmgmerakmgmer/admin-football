@@ -9,6 +9,7 @@ type SingleShopItemProps = {
             en: string,
             ar: string
         },
+        number_of_players: number,
         endDate:string
         _id: string
     },
@@ -27,6 +28,11 @@ export default function SingleShopItem(props: SingleShopItemProps) {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
                 <div>
                     <div className="font-medium text-gray-900">{props.value.eventName.ar}</div>
+                </div>
+            </td>
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
+                <div>
+                    <div className="font-medium text-gray-900">{props.value.number_of_players}</div>
                 </div>
             </td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:pl-6">
