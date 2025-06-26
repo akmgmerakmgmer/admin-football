@@ -16,7 +16,7 @@ export default function AddAndEdit() {
     const [loading, setLoading] = useState(false)
     const [generalError, setGeneralError] = useState({ en: '', ar: '' })
     const [imageError, setImageError] = useState('')
-    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', season_end_rank: '', wins_to_promote: 0, loses_to_demote: 0, rank_banner: { en: "", ar: "" } })
+    const [rankForm, setRankForm] = useState({ image: '', bgImage: '', title: { en: "", ar: "" }, prizes: [], next_rank: '', prev_rank: '', season_end_rank: '', wins_to_promote: 0, loses_to_demote: 0, rank_banner: { en: "", ar: "" }, rank_number: 0 })
     const [ranks, setRanks] = useState([])
     const [errorData, setErrorData] = useState({ bgImage: '', image: '', 'title.en': '', 'title.ar': '', 'rank_banner.en': '', 'rank_banner.ar': '' })
     const { id } = useParams()
@@ -92,6 +92,9 @@ export default function AddAndEdit() {
                 <div>
                     <h2 className='text-xl'>{id ? t("editRank") : t("addRank")}</h2>
                     <div className='flex flex-col gap-1'>
+                         <div className='flex gap-3 items-center'>
+                            <Input inputType='number' required value={rankForm.rank_number} label={t('rankNumber')} inputValue={(value: number) => setRankForm({ ...rankForm, rank_number: value })} width="w-full" disabled={loading} />
+                        </div>
                         <div className='mt-5'>
                             <span>{t('backgroundImage')}</span>
                             <UploadImage imageError={errorData.bgImage} imageUploaded={(value: any) => setRankForm({ ...rankForm, bgImage: value })} imageNotUploaded={(error: any) => setImageError(error)} />
@@ -142,7 +145,7 @@ export default function AddAndEdit() {
                             <Input inputType='number' required value={rankForm.wins_to_promote} label={t('winsToPromote')} inputValue={(value: number) => setRankForm({ ...rankForm, wins_to_promote: value })} width="w-full" disabled={loading} />
                         </div>
                         <div className='flex gap-3 items-center'>
-                            <Input inputType='numbe' required value={rankForm.loses_to_demote} label={t('losesToDemote')} inputValue={(value: number) => setRankForm({ ...rankForm, loses_to_demote: value })} width="w-full" disabled={loading} />
+                            <Input inputType='number' required value={rankForm.loses_to_demote} label={t('losesToDemote')} inputValue={(value: number) => setRankForm({ ...rankForm, loses_to_demote: value })} width="w-full" disabled={loading} />
                         </div>
                         <DynamicSelect value={rankForm.next_rank} label={t('nextRank')} items={ranks} selectCallback={(value: any) => {
                             rankForm.next_rank = value._id
@@ -156,6 +159,7 @@ export default function AddAndEdit() {
                             rankForm.season_end_rank = value._id
                             setRankForm({ ...rankForm })
                         }} />
+                        
                         <Prizes loading={loading} mainForm={rankForm} />
                         <button className={`w-full h-12 bg-primaryColor mt-7 text-white rounded-md`} onClick={id ? editRank : addRank}>
                             {loading ? <ButtonLoading loading={loading} /> : <span>{id ? t('editRank') : t('addRank')}</span>}
