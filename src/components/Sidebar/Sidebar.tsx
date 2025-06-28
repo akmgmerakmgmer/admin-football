@@ -147,7 +147,7 @@ export default function Sidebar(props: SidebarProps) {
     ]
     useEffect(() => {
         const token = localStorage.getItem('token')
-        if (!token || user?.roles?.indexOf('client') > -1) return setLinks(noTokenList)
+        if (!token || (user && user.roles && user?.roles?.indexOf('client') > -1)) return setLinks(noTokenList)
         return setLinks(defaultLinks)
     }, [user])
 

@@ -6,8 +6,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux"
-import { fetchCategoriesDone, fetchLastOrders, fetchSystemData, fetchUserDone } from '../../redux/user';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { fetchUserDone } from '../../redux/user';
+import { Link, useNavigate } from 'react-router-dom';
 import Avatar from './NavComponents/Avatar';
 import NavDrawer from './NavDrawer';
 import FullScreenLoading from '../Loadings/FullScreenLoading';
@@ -73,7 +73,7 @@ export default function TopBar() {
             >
                 <FullScreenLoading />
             </CSSTransition>
-            <h1 className='font-bold whitespace-nowrap tracking-wider cursor-pointer' onClick={()=>navigate('/questions')}>InZone</h1>
+            <h1 className='font-bold whitespace-nowrap tracking-wider cursor-pointer' onClick={() => navigate('/questions')}>InZone</h1>
             <div className='lg:flex hidden items-center gap-2.5 w-full justify-end'>
                 <Select buttonName={i18n.language === 'en' ? 'English' : 'عربي'} menuItems={langs} />
                 {!user.username ? <Link to={'/login'}><LoginIcon /></Link> : <Select buttonName={<Avatar />} menuItems={!user.username ? accountProfileLogin : accountProfileLogout} divide={true} />}
