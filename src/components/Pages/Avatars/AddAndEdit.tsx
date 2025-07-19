@@ -13,7 +13,7 @@ export default function AddAndEdit() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const [imageError, setImageError] = useState('')
-    const [avatarForm, setAvatarForm] = useState({ image: '', price: null, video: '',endDate:'' })
+    const [avatarForm, setAvatarForm] = useState({ image: '', price: null, video: '', endDate: '', quantity: 0 })
     const [errorData, setErrorData] = useState({ image: '', price: '' })
     const { id } = useParams()
     const { t } = useTranslation()
@@ -91,6 +91,9 @@ export default function AddAndEdit() {
                         </div>
                         <div className='flex gap-3 items-center'>
                             <Input inputType='number' value={avatarForm.price} label={t('price')} inputValue={(value: any) => setAvatarForm({ ...avatarForm, price: value })} width="w-full" disabled={loading} errorMessage={t(errorData.price)} />
+                        </div>
+                        <div className='flex gap-3 items-center'>
+                            <Input inputType='number' value={avatarForm.quantity} label={t('quantity')} inputValue={(value: any) => setAvatarForm({ ...avatarForm, quantity: value })} width="w-full" disabled={loading} />
                         </div>
                         <div className='border-gray-300 border rounded-md p-3 w-full'>
                             <input value={avatarForm.endDate || ''} className='outline-none focus:border-none w-full' type="date" id="endDate" name="endDate" onChange={(e) => setAvatarForm({ ...avatarForm, endDate: e.target.value })}></input>
